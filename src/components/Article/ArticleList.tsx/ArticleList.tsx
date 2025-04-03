@@ -1,7 +1,7 @@
 'use client'
 
 import { IArticle } from '@/pages/api/articles/articles.interfaces'
-import Article from '@/components/Article/Article'
+import RecentArticle from '@/components/Article/RecentArticle/RecentArticle'
 import blogApiService from '@/pages/api/articles/articles'
 import { useEffect, useState } from 'react'
 
@@ -22,8 +22,8 @@ export default function ArticleList() {
     <div>Loading...</div>
   ) : articles.length > 0 ? (
     <div className="d-flex flex-column gap-4 mt-5">
-      {articles.map((article: IArticle) => (
-        <Article key={article.articleId} article={article} />
+      {articles.map((article: IArticle, index: number) => (
+        <RecentArticle key={index} article={article} />
       ))}
     </div>
   ) : (

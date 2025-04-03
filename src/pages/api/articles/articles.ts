@@ -1,9 +1,11 @@
 import axiosInstance from '@/lib/axiosInstance'
-import { IAllArticles, IArticle } from './articles.interfaces'
+import { IAllArticles, IArticle, IArticleDetails } from './articles.interfaces'
 import { ApiResponse } from '../api.interfaces'
 
-const getArticles = async (): Promise<IArticle[]> => {
-  const response: ApiResponse<IAllArticles> = await axiosInstance.get('/articles')
+const getArticles = async (limit?: number): Promise<IArticle[]> => {
+  const response: ApiResponse<IAllArticles> = await axiosInstance.get('/articles', {
+    params: { limit },
+  })
   const { items: articles } = response.data
 
   // sort by lastUpdatedAt descending
@@ -13,6 +15,11 @@ const getArticles = async (): Promise<IArticle[]> => {
   )
 }
 
-const blogApiService = { getArticles }
+const getArticle = async (articleId: string): Promise<IArticleDetails> => {
+  const response: ApiResponse<IArticleDetails> = await axiosInstance.get(`/articles/${articleId}`)
+  return response.data
+}
+
+const blogApiService = { getArticles, getArticle }
 
 export default blogApiService

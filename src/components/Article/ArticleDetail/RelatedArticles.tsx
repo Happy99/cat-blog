@@ -1,0 +1,39 @@
+import { useState, useEffect } from 'react'
+import blogApiService from '@/pages/api/articles/articles'
+import { IArticle } from '@/pages/api/articles/articles.interfaces'
+import Link from 'next/link'
+
+const truncatePerex = (text: string, maxLength: number): string => {
+  if (text.length <= maxLength) return text
+  return `${text.slice(0, maxLength)}...`
+}
+
+const RelatedArticles = () => {
+  const [relatedArticles, setRelatedArticles] = useState<IArticle[]>([])
+
+  useEffect(() => {
+    const fetchRelatedArticles = async () => {
+      const articles = await blogApiService.getArticles(4)
+      setRelatedArticles(articles)
+    }
+    fetchRelatedArticles()
+  }, [])
+
+  return (
+    <div className="col-md-4 border-start">
+      <h4 className="mb-4">Related articles</h4>
+      <div className="d-flex flex-column gap-4">
+        {relatedArticles.map((article, index) => (
+          <div key={index} className="d-flex flex-column gap-2">
+            <Link className="text-dark" href={`/articles/${article.articleId}`}>
+              <h6 className="mb-2">{article.title}</h6>
+              <p className="mb-0">{truncatePerex(article.perex, 100)}</p>
+            </Link>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default RelatedArticles
