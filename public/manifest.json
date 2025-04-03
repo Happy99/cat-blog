@@ -1,18 +1,18 @@
 {
-  "name": "cat-blog",
-  "short_name": "cat-blog",
+  "name": "Cat Blog",
+  "short_name": "Cat Blog",
   "icons": [
     {
-      "src": "/web-app-manifest-192x192.png",
+      "src": "/icon1.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any"
     },
     {
-      "src": "/web-app-manifest-512x512.png",
+      "src": "/apple-icon.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any"
     }
   ],
   "theme_color": "#ffffff",

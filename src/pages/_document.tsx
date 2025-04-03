@@ -1,5 +1,22 @@
+import { Metadata } from 'next'
 import { Html, Head, Main, NextScript } from 'next/document'
 import Script from 'next/script'
+
+export const metadata: Metadata = {
+  title: 'Applifting Blog',
+  description: 'Applifting Blog',
+  icons: {
+    icon: [{ url: '/favicon.ico' }, { url: '/icon1.png', sizes: '32x32', type: 'image/png' }],
+    apple: [{ url: '/apple-icon.png' }],
+    other: [
+      {
+        rel: 'apple-touch-icon-precomposed',
+        url: '/apple-icon.png',
+      },
+    ],
+  },
+  manifest: '/manifest.json',
+}
 
 export default function Document() {
   return (
