@@ -19,6 +19,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false }
 }
 
+//@ts-expect-error - pls help me with this, I have no power here
 export const getStaticProps: GetStaticProps<Props> = async ({
   params,
 }: {
