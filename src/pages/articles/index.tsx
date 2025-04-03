@@ -1,5 +1,11 @@
+import PageHeading from '@/components/PageHeading.tsx/PageHeading'
+
 const Articles = () => {
-  return <div>Articles</div>
+  return (
+    <>
+      <PageHeading title="Recent articles" />
+    </>
+  )
 }
 
 export default Articles
