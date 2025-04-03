@@ -8,11 +8,11 @@ const RecentArticle = ({ article }: { article: IArticle }) => {
     <div className="row">
       {/* // TODO: I dont like this, but wireframe does not have full container width for the article */}
       <div className="col-md-8 col-12">
-        <article className="d-flex flex-row gap-4">
+        <article className="d-lg-flex flex-row gap-4">
           <Image src={'/cat.jpg'} alt={article.title} width={272} height={244} />
           <div className="d-flex flex-column gap-2">
             <h4>{article.title}</h4>
-            <AuthorDate date={article.createdAt} />
+            <AuthorDate className="align-items-start" date={article.createdAt} />
             <p>{article.perex}</p>
             <ArticleFooter articleId={article.articleId} />
           </div>
