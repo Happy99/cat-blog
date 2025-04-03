@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # //TODO: fix this var naming
+      NEXT_PUBLIC_APPLIFTING_API_URL: ${{ secrets.APPLIFTING_API_URL }}
+      NEXT_PUBLIC_APPLIFTING_API_KEY: ${{ secrets.APPLIFTING_API_KEY }}
 
     steps:
       - name: Checkout repository
