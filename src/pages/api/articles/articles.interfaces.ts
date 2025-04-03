@@ -1,3 +1,4 @@
+//TODO: go trough types, some of them are read only, some of them are DateTime
 import { IPagination } from '../api.interfaces'
 import { v4 as uuidv4 } from 'uuid'
 
