@@ -1,11 +1,11 @@
 import PageHeading from '@/components/PageHeading/PageHeading'
-import ArticleList from '@/components/Article/ArticleList.tsx/ArticleList'
+import RecentArticlesList from '@/components/Article/RecentArticle/RecentArticleList'
 
 export default function Articles() {
   return (
     <>
       <PageHeading title="Recent articles" />
-      <ArticleList />
+      <RecentArticlesList />
     </>
   )
 }

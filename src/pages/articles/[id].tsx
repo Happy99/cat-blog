@@ -5,6 +5,7 @@ import ArticleDetail from '@/components/Article/ArticleDetail/ArticleDetail'
 import RelatedArticles from '@/components/Article/ArticleDetail/RelatedArticles'
 interface Props {
   article: IArticleDetails
+  relatedArticles: IArticle[]
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -26,20 +27,27 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   params: { id: string }
 }) => {
   const article = await blogApiService.getArticle(params.id)
+  const relatedArticles = await blogApiService.getArticles(4)
 
   return {
-    props: { article },
+    props: { article, relatedArticles },
     // Next.js will invalidate the cache when a
     // request comes in, at most once every 60 seconds.
     revalidate: 60,
   }
 }
 
-export default function ArticleDetailPage({ article }: { article: IArticleDetails }) {
+export default function ArticleDetailPage({
+  article,
+  relatedArticles,
+}: {
+  article: IArticleDetails
+  relatedArticles: IArticle[]
+}) {
   return (
     <main className="row">
       <ArticleDetail article={article} />
-      <RelatedArticles />
+      <RelatedArticles relatedArticles={relatedArticles} />
     </main>
   )
 }

@@ -5,7 +5,7 @@ import RecentArticle from '@/components/Article/RecentArticle/RecentArticle'
 import blogApiService from '@/pages/api/articles/articles'
 import { useEffect, useState } from 'react'
 
-export default function ArticleList() {
+export default function RecentArticlesList() {
   const [isLoading, setIsLoading] = useState(true)
   const [articles, setArticles] = useState<IArticle[]>([])
 
@@ -18,6 +18,7 @@ export default function ArticleList() {
     fetchArticles()
   }, [])
 
+  //TODO: prefetch first article with ISR
   return isLoading ? (
     <div>Loading...</div>
   ) : articles.length > 0 ? (

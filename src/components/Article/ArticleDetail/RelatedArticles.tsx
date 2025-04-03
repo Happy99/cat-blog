@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react'
-import blogApiService from '@/pages/api/articles/articles'
 import { IArticle } from '@/pages/api/articles/articles.interfaces'
 import Link from 'next/link'
 
@@ -8,17 +6,7 @@ const truncatePerex = (text: string, maxLength: number): string => {
   return `${text.slice(0, maxLength)}...`
 }
 
-const RelatedArticles = () => {
-  const [relatedArticles, setRelatedArticles] = useState<IArticle[]>([])
-
-  useEffect(() => {
-    const fetchRelatedArticles = async () => {
-      const articles = await blogApiService.getArticles(4)
-      setRelatedArticles(articles)
-    }
-    fetchRelatedArticles()
-  }, [])
-
+const RelatedArticles = ({ relatedArticles }: { relatedArticles: IArticle[] }) => {
   return (
     <div className="col-md-4 border-start">
       <h4 className="mb-4">Related articles</h4>
