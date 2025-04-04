@@ -1,15 +1,16 @@
 import type { GetStaticPaths, GetStaticProps } from 'next'
-import { IArticle, IArticleDetails } from '@/pages/api/articles/articles.interfaces'
-import blogApiService from '@/pages/api/articles/articles'
+import { IArticle, IArticleDetails } from '@/lib/articles/articles.interfaces'
+import { articlesService } from '@/lib/articles/articleService'
 import ArticleDetail from '@/components/Article/ArticleDetail/ArticleDetail'
 import RelatedArticles from '@/components/Article/ArticleDetail/RelatedArticles'
+
 interface Props {
   article: IArticleDetails
   relatedArticles: IArticle[]
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const articles = await blogApiService.getArticles()
+  const articles = await articlesService.getArticles(1) //TODO: fix to pre-build first one
   const paths = articles.map((article: IArticle) => ({
     params: { id: String(article.articleId) },
   }))
@@ -17,7 +18,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // We'll prerender only these paths at build time.
   // { fallback: 'blocking' } will server-render pages
   // on-demand if the path doesn't exist.
-  return { paths, fallback: false }
+  return { paths, fallback: 'blocking' }
 }
 
 //@ts-expect-error - pls help me with this, I have no power here
@@ -26,8 +27,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({
 }: {
   params: { id: string }
 }) => {
-  const article = await blogApiService.getArticle(params.id)
-  const relatedArticles = await blogApiService.getArticles(4)
+  const article = await articlesService.getArticle(params.id)
+  const relatedArticles = await articlesService.getArticles(4) //TODO: make sure I dont fetch the same article
 
   return {
     props: { article, relatedArticles },

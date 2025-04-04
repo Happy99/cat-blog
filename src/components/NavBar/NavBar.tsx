@@ -46,7 +46,7 @@ const NavBar = () => {
           {/* //TODO: login btn could be outside once its collapsed, or moved to the first position at least */}
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link className="nav-link text-primary d-flex align-items-center" href="/login">
+              <Link className="nav-link text-primary d-flex align-items-center" href="/auth/login">
                 Log In
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

@@ -1,3 +1,5 @@
+//TODO: think about implementing Zod validation or smthin similiar
+
 import axios from 'axios'
 
 // instance creation
@@ -13,7 +15,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   config => {
-    console.log('_____ axiosInstance.ts - REQUEST use - config', config)
+    // console.log('_____ axiosInstance.ts - REQUEST use - config', config)
     // TODO: add auth token, it's fetched from /login
     // const token = localStorage.getItem('token')
     // if (token) {
@@ -40,7 +42,7 @@ axiosInstance.interceptors.response.use(
       switch (status) {
         case 400:
           console.error('Bad Request:', data)
-          break
+          return data.message
         case 401:
           console.error('Unauthorized:', data)
           // TODO: handle unauthorized (e.g., redirect to login)

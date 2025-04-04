@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { UUID } from '@/pages/api/articles/articles.interfaces'
+import { UUID } from '@/lib/articles/articles.interfaces'
 
 const ArticleFooter = ({ articleId }: { articleId: UUID }) => {
   return (

@@ -1,5 +1,5 @@
 //TODO: go trough types, some of them are read only, some of them are DateTime
-import { IPagination } from '../api.interfaces'
+import { IPagination } from '@/api/api.interfaces'
 import { v4 as uuidv4 } from 'uuid'
 
 export type UUID = ReturnType<typeof uuidv4>

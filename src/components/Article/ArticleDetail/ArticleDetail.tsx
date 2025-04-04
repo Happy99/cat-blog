@@ -1,6 +1,6 @@
-import AuthorDate from '../AuthorDate'
+import AuthorDate from '@/components/Article/AuthorDate'
 import Image from 'next/image'
-import { IArticleDetails } from '@/pages/api/articles/articles.interfaces'
+import { IArticleDetails } from '@/lib/articles/articles.interfaces'
 
 const ArticleDetail = ({ article }: { article: IArticleDetails }) => {
   return (

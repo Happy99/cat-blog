@@ -1,6 +1,6 @@
 import axiosInstance from '@/lib/axiosInstance'
-import { IAllArticles, IArticle, IArticleDetails } from './articles.interfaces'
-import { ApiResponse } from '../api.interfaces'
+import { IAllArticles, IArticle, IArticleDetails } from '@/lib/articles/articles.interfaces'
+import { ApiResponse } from '@/api/api.interfaces'
 
 const getArticles = async (limit?: number): Promise<IArticle[]> => {
   const response: ApiResponse<IAllArticles> = await axiosInstance.get('/articles', {
@@ -8,8 +8,8 @@ const getArticles = async (limit?: number): Promise<IArticle[]> => {
   })
   const { items: articles } = response.data
 
-  // sort by lastUpdatedAt descending
   // TODO: make sure this .getTime() works, it was quite long time ago when I did this for last time :D
+  // sort by lastUpdatedAt descending
   return articles.sort(
     (a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime()
   )
@@ -20,6 +20,4 @@ const getArticle = async (articleId: string): Promise<IArticleDetails> => {
   return response.data
 }
 
-const blogApiService = { getArticles, getArticle }
-
-export default blogApiService
+export const articlesService = { getArticles, getArticle }

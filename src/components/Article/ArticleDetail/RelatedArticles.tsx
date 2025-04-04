@@ -1,4 +1,4 @@
-import { IArticle } from '@/pages/api/articles/articles.interfaces'
+import { IArticle } from '@/lib/articles/articles.interfaces'
 import Link from 'next/link'
 
 const truncatePerex = (text: string, maxLength: number): string => {
