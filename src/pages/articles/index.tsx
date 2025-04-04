@@ -1,7 +1,7 @@
+import RecentArticle from '@/components/Article/RecentArticle/RecentArticle'
 import PageHeading from '@/components/PageHeading/PageHeading'
 import { IArticle } from '@/lib/articles/articles.interfaces'
 import { articlesService } from '@/lib/articles/articleService'
-import RecentArticle from '@/components/Article/RecentArticle/RecentArticle'
 import { GetStaticProps } from 'next'
 
 interface IArticlesProps {

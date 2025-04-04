@@ -1,8 +1,8 @@
-import type { GetStaticPaths, GetStaticProps } from 'next'
-import { IArticle, IArticleDetails } from '@/lib/articles/articles.interfaces'
-import { articlesService } from '@/lib/articles/articleService'
 import ArticleDetail from '@/components/Article/ArticleDetail/ArticleDetail'
 import RelatedArticles from '@/components/Article/ArticleDetail/RelatedArticles'
+import { IArticle, IArticleDetails } from '@/lib/articles/articles.interfaces'
+import { articlesService } from '@/lib/articles/articleService'
+import type { GetStaticPaths, GetStaticProps } from 'next'
 
 interface Props {
   article: IArticleDetails

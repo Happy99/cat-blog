@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import { IArticle } from '@/lib/articles/articles.interfaces'
 import AuthorDate from '@/components/Article/AuthorDate'
 import ArticleFooter from '@/components/Article/RecentArticle/ArticleFooter'
+import { IArticle } from '@/lib/articles/articles.interfaces'
+import Image from 'next/image'
 
 const RecentArticle = ({ article }: { article: IArticle }) => {
   return (

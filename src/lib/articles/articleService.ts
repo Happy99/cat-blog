@@ -1,6 +1,6 @@
-import axiosInstance from '@/lib/axiosInstance'
-import { IAllArticles, IArticle, IArticleDetails } from '@/lib/articles/articles.interfaces'
 import { ApiResponse } from '@/api/api.interfaces'
+import { IAllArticles, IArticle, IArticleDetails } from '@/lib/articles/articles.interfaces'
+import axiosInstance from '@/lib/axiosInstance'
 
 const getArticles = async (limit?: number): Promise<IArticle[]> => {
   const response: ApiResponse<IAllArticles> = await axiosInstance.get('/articles', {

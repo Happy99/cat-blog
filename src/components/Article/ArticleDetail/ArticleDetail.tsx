@@ -1,6 +1,6 @@
 import AuthorDate from '@/components/Article/AuthorDate'
-import Image from 'next/image'
 import { IArticleDetails } from '@/lib/articles/articles.interfaces'
+import Image from 'next/image'
 
 const ArticleDetail = ({ article }: { article: IArticleDetails }) => {
   return (

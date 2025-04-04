@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { Html, Head, Main, NextScript } from 'next/document'
+import { Head, Html, Main, NextScript } from 'next/document'
 import Script from 'next/script'
 
 export const metadata: Metadata = {
