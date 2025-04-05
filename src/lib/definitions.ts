@@ -1,3 +1,4 @@
+import { UUID } from '@/lib/articles/articles.interfaces'
 import { z } from 'zod'
 
 export const LoginFormSchema = z.object({
@@ -22,5 +23,13 @@ export type FormState =
         password?: string[]
       }
       message?: string
+      success?: boolean
     }
   | undefined
+
+export type SessionPayload = {
+  username: string
+  accessToken: UUID
+  tokenType: string
+  expiresIn: number
+}

@@ -1,15 +1,18 @@
 import { FormState, LoginFormSchema } from '@/lib/definitions'
-import { ILoginResponse } from '@/pages/api/auth/auth.interfaces'
+import { ILoginResponseSuccess } from '@/pages/api/auth/auth.interfaces' // Import both
 import { axiosFrontendInstance } from '../axiosInstance'
 
-export async function login(state: FormState, formData: FormData) {
-  // Validate form fields
+// Define the response structure with explicit success and error cases
+type LoginResponse =
+  | { data: { success: true; data: ILoginResponseSuccess['data'] } } // Success case
+  | { data?: never; code: string; message: string } // Error case from interceptor
+
+async function login(state: FormState, formData: FormData): Promise<FormState> {
   const validatedFields = LoginFormSchema.safeParse({
     username: formData.get('username'),
     password: formData.get('password'),
   })
 
-  // If any form fields are invalid, return before fetching data
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
@@ -17,34 +20,39 @@ export async function login(state: FormState, formData: FormData) {
   }
 
   const { username, password } = validatedFields.data
-  const { data } = await authService.handleAuthResponse({
-    username,
-    password,
-  })
+  const response = await handleAuthResponse(username, password)
+  console.log('_____ CLIENT: authService.ts - login - response', response)
 
-  console.log('_____ CLIENT: authService.ts - login - response', data)
-
-  // return form error if response contains result which is error
-  if (data && data.code === 'INVALID_CREDENTIALS') {
-    return {
-      message: `Name or ${data.message}`,
+  // Check for error response from interceptor
+  if ('code' in response) {
+    if (response.code === 'INVALID_CREDENTIALS') {
+      return {
+        message: `Name or ${response.message}`,
+      }
     }
+    return {
+      message: 'An unexpected error occurred',
+    }
+  }
+
+  // Check success within response.data (Axios success case)
+  if (response.data && response.data.success) {
+    return {
+      success: true,
+      message: 'Login successful',
+    }
+  }
+
+  return {
+    message: 'An unexpected error occurred',
   }
 }
 
-export const handleAuthResponse = async ({
-  username,
-  password,
-}: {
-  username: string
-  password: string
-}): Promise<ILoginResponse> => {
-  return await axiosFrontendInstance.post('api/auth/login', {
+async function handleAuthResponse(username: string, password: string): Promise<LoginResponse> {
+  return await axiosFrontendInstance.post('/api/auth/login', {
     username,
     password,
   })
 }
 
-const authService = { handleAuthResponse }
-
-export default authService
+export const authService = { handleAuthResponse, login }

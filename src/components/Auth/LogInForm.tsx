@@ -1,8 +1,18 @@
-import { login } from '@/lib/auth/authService'
-import { useActionState } from 'react'
+'use client'
+
+import { authService } from '@/lib/auth/authService'
+import { useRouter } from 'next/router'
+import { useActionState, useEffect } from 'react'
 
 const LogInForm = () => {
-  const [state, action, pending] = useActionState(login, undefined)
+  const [state, action, pending] = useActionState(authService.login, undefined)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (state?.success) {
+      router.push('/')
+    }
+  }, [state, router])
 
   return (
     <form action={action}>
@@ -17,9 +27,9 @@ const LogInForm = () => {
         <input id="password" name="password" type="password" />
       </div>
       {state?.errors?.password && <p>{state.errors.password}</p>}
-      {state?.message && <p>{state.message}</p>}
+      {state?.message && !state.success && <p>{state.message}</p>}
       <button disabled={pending} type="submit">
-        Login
+        {pending ? 'Logging in...' : 'Login'}
       </button>
     </form>
   )

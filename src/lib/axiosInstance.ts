@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-
+// import { sessionService } from './auth/session'
 const createAxiosInstance = (config: AxiosRequestConfig): AxiosInstance => {
   return axios.create(config)
 }
@@ -7,13 +7,12 @@ const createAxiosInstance = (config: AxiosRequestConfig): AxiosInstance => {
 const setupInterceptor = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
     config => {
-      // console.log('_____ instance.ts - REQUEST use - config', config)
-      // TODO: add auth token, it's fetched from /login
-      // const token = localStorage.getItem('token')
-      // if (token) {
-      //   config.headers.Authorization = `Bearer ${token}`
+      // const { accessToken } = await sessionService.verifySession()
+      // if (accessToken) {
+      //   config.headers.Authorization = `Bearer ${accessToken}`
       // }
-      console.log('_____ instance.ts - REQUEST use - config.headers', config.headers)
+
+      // console.log('_____ instance.ts - REQUEST use - config', config)
       return config
     },
     error => {
@@ -31,6 +30,8 @@ const setupInterceptor = (instance: AxiosInstance) => {
       if (error.response) {
         // if response is not 200, handle error
         const { status, data } = error.response
+
+        console.log('_____ instance.ts - RESPONSE use - error', error)
 
         // should be all APPLIFTING API errors
         switch (status) {
