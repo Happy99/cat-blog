@@ -10,15 +10,14 @@ interface Props {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const articles = await articlesService.getArticles(1) //TODO: fix to pre-build first one
+  const articles = await articlesService.getArticles()
   const paths = articles.map((article: IArticle) => ({
     params: { id: String(article.articleId) },
   }))
 
-  // We'll prerender only these paths at build time.
-  // { fallback: 'blocking' } will server-render pages
-  // on-demand if the path doesn't exist.
-  return { paths, fallback: 'blocking' }
+  // fallback is false, all articles are pre-rendered
+  // it is small database, with more articles it would be better to use 'blocking'
+  return { paths, fallback: false }
 }
 
 //@ts-expect-error - pls help me with this, I have no power here

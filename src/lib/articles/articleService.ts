@@ -1,9 +1,9 @@
 import { ApiResponse } from '@/api/api.interfaces'
 import { IAllArticles, IArticle, IArticleDetails } from '@/lib/articles/articles.interfaces'
-import axiosInstance from '@/lib/axiosInstance'
+import { axiosBackendInstance } from '@/lib/axiosInstance'
 
 const getArticles = async (limit?: number): Promise<IArticle[]> => {
-  const response: ApiResponse<IAllArticles> = await axiosInstance.get('/articles', {
+  const response: ApiResponse<IAllArticles> = await axiosBackendInstance.get('/articles', {
     params: { limit },
   })
   const { items: articles } = response.data
@@ -16,7 +16,9 @@ const getArticles = async (limit?: number): Promise<IArticle[]> => {
 }
 
 const getArticle = async (articleId: string): Promise<IArticleDetails> => {
-  const response: ApiResponse<IArticleDetails> = await axiosInstance.get(`/articles/${articleId}`)
+  const response: ApiResponse<IArticleDetails> = await axiosBackendInstance.get(
+    `/articles/${articleId}`
+  )
   return response.data
 }
 
