@@ -4,7 +4,7 @@ interface LayoutProps {
   children: ReactNode
 }
 
-export default function Layout({ children }: LayoutProps) {
+const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <NavBar />
@@ -12,3 +12,5 @@ export default function Layout({ children }: LayoutProps) {
     </>
   )
 }
+
+export default Layout
