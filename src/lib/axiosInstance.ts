@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 
-const createAxiosInstance = (setup: AxiosRequestConfig): AxiosInstance => {
-  return axios.create(setup)
+const createAxiosInstance = (config: AxiosRequestConfig): AxiosInstance => {
+  return axios.create(config)
 }
 
 const setupInterceptor = (instance: AxiosInstance) => {
@@ -13,6 +13,7 @@ const setupInterceptor = (instance: AxiosInstance) => {
       // if (token) {
       //   config.headers.Authorization = `Bearer ${token}`
       // }
+      console.log('_____ instance.ts - REQUEST use - config.headers', config.headers)
       return config
     },
     error => {
