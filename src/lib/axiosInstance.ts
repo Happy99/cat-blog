@@ -1,5 +1,3 @@
-//TODO: think about implementing Zod validation or smthin similiar
-
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 
 const createAxiosInstance = (setup: AxiosRequestConfig): AxiosInstance => {
@@ -7,8 +5,6 @@ const createAxiosInstance = (setup: AxiosRequestConfig): AxiosInstance => {
 }
 
 const setupInterceptor = (instance: AxiosInstance) => {
-  console.log('_____ instance.ts - setupInterceptor - instance')
-
   instance.interceptors.request.use(
     config => {
       // console.log('_____ instance.ts - REQUEST use - config', config)
@@ -41,6 +37,8 @@ const setupInterceptor = (instance: AxiosInstance) => {
             console.error('Bad Request:', data)
             return { code: data.code, message: data.message }
           case 401:
+            // TODO: think what to do with 401, maybe just redirect to login page
+            // should not happen, because X-API-KEY in env, but just in case
             console.error('Unauthorized:', data)
             return { code: data.code, message: data.message }
           case 403:
@@ -50,10 +48,8 @@ const setupInterceptor = (instance: AxiosInstance) => {
             console.error('Error:', data)
         }
       } else if (error.request) {
-        // no response :(((
         console.error('No response received:', error.request)
       } else {
-        // something went wrong :D
         console.error('Error setting up request:', error.message)
       }
 
@@ -62,8 +58,7 @@ const setupInterceptor = (instance: AxiosInstance) => {
   )
 }
 
-// Since APPLIFTING documentation says I can expose API key, I will be doing simple GETS
-// without need of calling Next.js API routes
+// all my FE GETs are comming from ISR, so API key is hidden behind server
 const frontendRequestConfig: AxiosRequestConfig = {
   baseURL: process.env.NEXT_PUBLIC_FRONTEND_API_URL,
   timeout: 10000,
