@@ -24,9 +24,6 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Check env variables
-        run: env
-
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
