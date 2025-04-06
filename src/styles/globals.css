@@ -4,5 +4,5 @@
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important; /* not best pracitce to force, but here it is enough and by doc "don't worry too much about styling" */
 }
