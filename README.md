@@ -43,3 +43,4 @@ Interesting POC to me this blog.
 
 - when session is cleared in browser or it expires, context does not clear username -> navbar contains admin
 - refactoring, refactoring ... when I was really struggling I was putting everyting in once place, now it hurts
+- when article is created, it can be seen in related articles but when I click it returns 404 -> page refresh helps (ISR issue prob.)

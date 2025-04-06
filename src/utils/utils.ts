@@ -8,7 +8,7 @@ export const envHelper = (): void => {
   console.log('_____ ENV TEST', process.env.TEST_DEV)
 }
 
-export async function getSession(
+export async function validateFrontendSession(
   req: IncomingMessage & {
     cookies: NextApiRequestCookies
   }

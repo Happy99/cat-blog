@@ -16,9 +16,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     res.status(200).json({
       username: sessionData.username,
-      accessToken: sessionData.accessToken,
-      tokenType: sessionData.tokenType,
-      expiresIn: sessionData.expiresIn,
+      // accessToken: sessionData.accessToken,
+      // tokenType: sessionData.tokenType,
+      // expiresIn: sessionData.expiresIn,
     })
   } catch (error) {
     console.error('Error retrieving session:', error)
