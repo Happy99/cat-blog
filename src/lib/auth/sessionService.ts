@@ -1,16 +1,17 @@
 import 'server-only'
 
 import { SessionPayload } from '@/lib/definitions'
+import { envHelper } from '@/utils/utils'
 import { SignJWT, jwtVerify } from 'jose'
-import { NextApiResponse } from 'next'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { NextApiRequest, NextApiResponse } from 'next'
 import { cache } from 'react'
 
 const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
 
 async function encrypt(payload: SessionPayload) {
+  console.log('____ SERVER sessionService: encrypt: ', envHelper())
+
   return new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
@@ -19,13 +20,16 @@ async function encrypt(payload: SessionPayload) {
 }
 
 async function decrypt(session: string | undefined = '') {
+  console.log('____ SERVER sessionService: decrypt: ', envHelper())
+
   try {
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ['HS256'],
     })
     return payload
   } catch (error) {
-    console.log('Failed to verify session', error)
+    console.log('Failed to verify session:', error)
+    return null
   }
 }
 
@@ -33,41 +37,43 @@ async function createSession(
   { username, accessToken, tokenType, expiresIn }: SessionPayload,
   res: NextApiResponse
 ) {
-  const expiresAt = new Date(Date.now() + expiresIn)
+  console.log('____ SERVER sessionService: createSession: ', envHelper())
+
+  const expiresAt = new Date(Date.now() + expiresIn * 1000) // APPLIFTING API returns 3600 secs
   console.log(
     '____ SESSION SERVICE: expiresAt',
-    expiresAt.toLocaleString('en-GB', {
-      timeZone: 'Europe/Prague',
-      hour12: false,
-    })
+    expiresAt.toLocaleString('en-GB', { timeZone: 'Europe/Prague', hour12: false })
   )
   const session = await encrypt({ username, accessToken, tokenType, expiresIn })
 
   res.setHeader(
     'Set-Cookie',
-    `session=${session}; HttpOnly; Secure; Expires=${expiresAt.toUTCString()}; SameSite=Lax; Path=/`
+    `session=${session}; HttpOnly; Secure; Path=/; SameSite=Lax; Max-Age=${expiresIn}; Expires=${expiresAt.toUTCString()}`
   )
 }
 
-async function deleteSession() {
-  const cookieStore = await cookies()
-  cookieStore.delete('session')
+async function deleteSession(res: NextApiResponse) {
+  console.log('____ SERVER sessionService: deleteSession: ', envHelper())
+
+  res.setHeader('Set-Cookie', 'session=; HttpOnly; Secure; Path=/; Max-Age=0')
 }
 
-const verifySession = cache(async () => {
-  const cookie = (await cookies()).get('session')?.value
-  const session = await decrypt(cookie)
+const verifySession = cache(async (req: NextApiRequest) => {
+  console.log('____ SERVER sessionService: verifySession: ', envHelper())
 
-  if (!session?.username) {
-    redirect('/login')
+  const session = req.cookies.session
+  const sessionData = await decrypt(session)
+
+  if (!sessionData?.username) {
+    return null
   }
 
   return {
     isAuth: true,
-    username: session.username,
-    accessToken: session.accessToken,
-    tokenType: session.tokenType,
-    expiresIn: session.expiresIn,
+    username: sessionData.username,
+    accessToken: sessionData.accessToken,
+    tokenType: sessionData.tokenType,
+    expiresIn: sessionData.expiresIn,
   }
 })
 
