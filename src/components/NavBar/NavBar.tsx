@@ -43,9 +43,38 @@ const NavBar = () => {
           </ul>
           <ul className="navbar-nav ml-auto">
             {username ? (
-              <li className="nav-item">
-                <span className="nav-link">{username}</span>
-              </li>
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" href="/admin">
+                    My Articles
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" href="/admin/create">
+                    Create Article
+                  </Link>
+                </li>
+                <li className="nav-item dropdown">
+                  <button
+                    className="nav-link dropdown-toggle"
+                    id="navbarDropdown"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    {username}
+                  </button>
+                  <div
+                    className="dropdown-menu"
+                    aria-labelledby="navbarDropdown"
+                    style={{ right: '0' }}
+                  >
+                    <a className="dropdown-item" href="/auth/logout">
+                      Logout
+                    </a>
+                  </div>
+                </li>
+              </>
             ) : (
               <li className="nav-item">
                 <Link
