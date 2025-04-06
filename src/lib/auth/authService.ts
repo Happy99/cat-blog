@@ -1,11 +1,6 @@
 import { FormState, LoginFormSchema } from '@/lib/definitions'
-import { ILoginResponseSuccess } from '@/pages/api/auth/auth.interfaces' // Import both
+import { LoginResponse } from '@/pages/api/auth/auth.interfaces'
 import { axiosFrontendInstance } from '../axiosInstance'
-
-// Define the response structure with explicit success and error cases
-type LoginResponse =
-  | { data: { success: true; data: ILoginResponseSuccess['data'] } } // Success case
-  | { data?: never; code: string; message: string } // Error case from interceptor
 
 async function login(state: FormState, formData: FormData): Promise<FormState> {
   const validatedFields = LoginFormSchema.safeParse({
@@ -13,6 +8,7 @@ async function login(state: FormState, formData: FormData): Promise<FormState> {
     password: formData.get('password'),
   })
 
+  // form validation before ftchning data
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
@@ -21,9 +17,8 @@ async function login(state: FormState, formData: FormData): Promise<FormState> {
 
   const { username, password } = validatedFields.data
   const response = await handleAuthResponse(username, password)
-  console.log('_____ CLIENT: authService.ts - login - response', response)
 
-  // Check for error response from interceptor
+  // error
   if ('code' in response) {
     if (response.code === 'INVALID_CREDENTIALS') {
       return {
@@ -35,14 +30,15 @@ async function login(state: FormState, formData: FormData): Promise<FormState> {
     }
   }
 
-  // Check success within response.data (Axios success case)
-  if (response.data && response.data.success) {
+  // success
+  if (response.data?.success) {
     return {
       success: true,
       message: 'Login successful',
     }
   }
 
+  // unexpected - should not happen, just in case
   return {
     message: 'An unexpected error occurred',
   }

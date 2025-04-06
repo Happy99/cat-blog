@@ -13,4 +13,9 @@ export interface ILoginResponseFailed {
   message: string
 }
 
-export type ILoginResponse = ILoginResponseSuccess | ILoginResponseFailed
+export type TLoginResponse = ILoginResponseSuccess | ILoginResponseFailed
+
+// petstast: this is such a pain honestly, implement axios took me more then 15 hours
+export type LoginResponse =
+  | { data: { success: true; data: ILoginResponseSuccess['data'] } } // success
+  | { data?: never; code: string; message: string } // error from axios

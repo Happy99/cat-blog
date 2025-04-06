@@ -34,6 +34,13 @@ async function createSession(
   res: NextApiResponse
 ) {
   const expiresAt = new Date(Date.now() + expiresIn)
+  console.log(
+    '____ SESSION SERVICE: expiresAt',
+    expiresAt.toLocaleString('en-GB', {
+      timeZone: 'Europe/Prague',
+      hour12: false,
+    })
+  )
   const session = await encrypt({ username, accessToken, tokenType, expiresIn })
 
   res.setHeader(
@@ -42,12 +49,12 @@ async function createSession(
   )
 }
 
-export async function deleteSession() {
+async function deleteSession() {
   const cookieStore = await cookies()
   cookieStore.delete('session')
 }
 
-export const verifySession = cache(async () => {
+const verifySession = cache(async () => {
   const cookie = (await cookies()).get('session')?.value
   const session = await decrypt(cookie)
 

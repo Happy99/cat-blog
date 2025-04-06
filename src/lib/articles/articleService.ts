@@ -1,6 +1,6 @@
-import { ApiResponse } from '@/api/api.interfaces'
 import { IAllArticles, IArticle, IArticleDetails } from '@/lib/articles/articles.interfaces'
 import { axiosBackendInstance } from '@/lib/axiosInstance'
+import { ApiResponse } from '@/pages/api/api.interfaces'
 
 const getArticles = async (limit?: number): Promise<IArticle[]> => {
   const response: ApiResponse<IAllArticles> = await axiosBackendInstance.get('/articles', {

@@ -1,4 +1,4 @@
-import { sessionService } from '@/lib/auth/session'
+import { sessionService } from '@/lib/auth/sessionService'
 import { axiosBackendInstance } from '@/lib/axiosInstance'
 import { envHelper } from '@/utils/utils'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -13,20 +13,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       password,
     })
 
+    // make sure Im in server - not client
     envHelper()
-    console.log('_____ SERVER: login.ts - response', response)
 
     // Login failed
     if ('code' in response) {
-      console.log('_____ SERVER: login.ts - login failed')
       res.status(401).json({ code: response.code, message: response.message })
       return
     }
 
     // Login success
     if ('data' in response) {
-      console.log('_____ SERVER: login.ts - login success')
       const { access_token, expires_in, token_type } = response.data
+
       if (access_token && token_type && expires_in) {
         await sessionService.createSession(
           {
@@ -37,7 +36,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
           res
         )
-        console.log('_____ SERVER: login.ts - login success: ', response.data)
+        console.log('_____ SERVER: login.ts - session created')
+
         res.status(200).json({ success: true, data: response.data })
         return
       }
