@@ -11,7 +11,6 @@ const LogInForm = () => {
     if (state?.success) {
       router.push('/')
     }
-    console.log('state', state)
   }, [state, router])
 
   return (

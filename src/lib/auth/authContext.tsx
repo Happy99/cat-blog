@@ -4,6 +4,7 @@ import { createContext, ReactNode, useContext, useEffect, useMemo, useState } fr
 interface AuthContextType {
   username: string | null
   setUsername: (username: string | null) => void
+  logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -24,10 +25,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     fetchSession()
   }, [])
 
+  const logout = async () => {
+    try {
+      await axiosFrontendInstance.post('/api/auth/logout')
+      setUsername(null)
+    } catch (error) {
+      console.error('Logout failed:', error)
+      setUsername(null)
+    }
+  }
+
   const value = useMemo(
     () => ({
       username,
       setUsername,
+      logout,
     }),
     [username]
   )

@@ -10,7 +10,8 @@ const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
 
 async function encrypt(payload: SessionPayload) {
-  console.log('____ SERVER sessionService: encrypt: ', envHelper())
+  console.log('____ SERVER sessionService: encrypt - ENV HELPER')
+  envHelper()
 
   return new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
@@ -20,7 +21,8 @@ async function encrypt(payload: SessionPayload) {
 }
 
 async function decrypt(session: string | undefined = '') {
-  console.log('____ SERVER sessionService: decrypt: ', envHelper())
+  console.log('____ SERVER sessionService: decrypt - ENV HELPER')
+  envHelper()
 
   try {
     const { payload } = await jwtVerify(session, encodedKey, {
@@ -37,7 +39,8 @@ async function createSession(
   { username, accessToken, tokenType, expiresIn }: SessionPayload,
   res: NextApiResponse
 ) {
-  console.log('____ SERVER sessionService: createSession: ', envHelper())
+  console.log('____ SERVER sessionService: createSession - ENV HELPER')
+  envHelper()
 
   const expiresAt = new Date(Date.now() + expiresIn * 1000) // APPLIFTING API returns 3600 secs
   console.log(
@@ -53,13 +56,15 @@ async function createSession(
 }
 
 async function deleteSession(res: NextApiResponse) {
-  console.log('____ SERVER sessionService: deleteSession: ', envHelper())
+  console.log('____ SERVER sessionService: deleteSession - ENV HELPER')
+  envHelper()
 
   res.setHeader('Set-Cookie', 'session=; HttpOnly; Secure; Path=/; Max-Age=0')
 }
 
 const verifySession = cache(async (req: NextApiRequest) => {
-  console.log('____ SERVER sessionService: verifySession: ', envHelper())
+  console.log('____ SERVER sessionService: verifySession - ENV HELPER')
+  envHelper()
 
   const session = req.cookies.session
   const sessionData = await decrypt(session)
