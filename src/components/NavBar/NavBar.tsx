@@ -45,12 +45,12 @@ const NavBar = () => {
             {username ? (
               <>
                 <li className="nav-item">
-                  <Link className="nav-link" href="/admin">
+                  <Link className="nav-link" href="/admin/articles">
                     My Articles
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" href="/admin/create">
+                  <Link className="nav-link" href="/admin/articles/new">
                     Create Article
                   </Link>
                 </li>
@@ -69,9 +69,9 @@ const NavBar = () => {
                     aria-labelledby="navbarDropdown"
                     style={{ right: '0' }}
                   >
-                    <a className="dropdown-item" href="/auth/logout">
+                    <Link className="dropdown-item" href="/auth/logout">
                       Logout
-                    </a>
+                    </Link>
                   </div>
                 </li>
               </>
