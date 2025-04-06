@@ -5,8 +5,8 @@ import { articlesService } from '@/lib/articles/articleService'
 import type { GetStaticPaths, GetStaticProps } from 'next'
 
 interface Props {
-  article: IArticleDetails
-  relatedArticles: IArticle[]
+  readonly article: IArticleDetails
+  readonly relatedArticles: IArticle[]
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -20,14 +20,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false }
 }
 
-//@ts-expect-error - pls help me with this, I have no power here
-export const getStaticProps: GetStaticProps<Props> = async ({
-  params,
-}: {
-  params: { id: string }
-}) => {
-  const article = await articlesService.getArticle(params.id)
-  const relatedArticles = await articlesService.getArticles(4) //TODO: make sure I dont fetch the same article
+export const getStaticProps: GetStaticProps<Props> = async context => {
+  const params = context.params
+
+  if (!params?.id) {
+    return {
+      notFound: true,
+    }
+  }
+
+  const articleId = params.id as string
+  const article = await articlesService.getArticle(articleId)
+
+  // I assume db will be small, so fetching all articles and then slicing, not best solution - could be refactored if db grows
+  const allArticles = await articlesService.getArticles()
+  const relatedArticles = allArticles.filter(a => a.articleId.toString() !== articleId).slice(0, 4) // Limit to 4 artcles
 
   return {
     props: { article, relatedArticles },
@@ -37,13 +44,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({
   }
 }
 
-export default function ArticleDetailPage({
-  article,
-  relatedArticles,
-}: {
-  article: IArticleDetails
-  relatedArticles: IArticle[]
-}) {
+export default function ArticleDetailPage({ article, relatedArticles }: Props) {
   return (
     <main className="row">
       <ArticleDetail article={article} />

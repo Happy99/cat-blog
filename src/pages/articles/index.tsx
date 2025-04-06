@@ -5,7 +5,7 @@ import { articlesService } from '@/lib/articles/articleService'
 import { GetStaticProps } from 'next'
 
 interface IArticlesProps {
-  articles: IArticle[]
+  readonly articles: IArticle[]
 }
 
 export const getStaticProps: GetStaticProps<IArticlesProps> = async () => {

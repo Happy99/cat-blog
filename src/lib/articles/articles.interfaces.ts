@@ -17,6 +17,7 @@ export interface IArticle {
   imageId: UUID
   createdAt: string
   lastUpdatedAt: string
+  author: 'Petr Stastny'
 }
 
 export interface IArticleDetails extends IArticle {
