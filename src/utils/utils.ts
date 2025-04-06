@@ -1,5 +1,6 @@
 import { axiosFrontendInstance } from '@/lib/axiosInstance'
 import { IncomingMessage } from 'http'
+import { NextApiResponse } from 'next'
 import { NextApiRequestCookies } from 'next/dist/server/api-utils'
 
 type ErrorMessages = {
@@ -44,7 +45,7 @@ export async function validateFrontendSession(
   return sessionData
 }
 
-export const handleApiError = (statusCode: number, from: string[]) => {
+export const handleApiError = (statusCode: number, from: string[], res: NextApiResponse) => {
   const nextErrors: ErrorStructure = {
     blog: {
       deleteArticle: {
@@ -68,11 +69,8 @@ export const handleApiError = (statusCode: number, from: string[]) => {
   }
 
   if (statusCode === 204) {
-    return { status: 204, end: true }
+    return res.status(statusCode).end()
   }
 
-  return {
-    status: statusCode,
-    json: { error: errorMessage || 'An unknown error occurred' },
-  }
+  return res.status(statusCode).json(errorMessage || 'An unknown error occurred')
 }

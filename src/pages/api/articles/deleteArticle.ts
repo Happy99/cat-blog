@@ -15,19 +15,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    await axiosBackendInstance.delete(`/articles/${articleId}`, {
+    const reponse = await axiosBackendInstance.delete(`/articles/${articleId}`, {
       headers: {
         Authorization: `Bearer ${sessionData.accessToken}`,
         'X-API-KEY': process.env.APPLIFTING_API_KEY,
       },
     })
 
-    const response = handleApiError(204, ['blog', 'deleteArticle'])
-    if (response.end) {
-      return res.status(response.status).end()
-    }
-
-    return res.status(response.status).json(response.json)
+    handleApiError(reponse.status, ['blog', 'deleteArticle'], res)
   } catch (error) {
     console.error('Error deleting article:', error)
     res.status(500).json({ error: 'Internal server error' })
