@@ -1,5 +1,3 @@
-'use client'
-
 import { authService } from '@/lib/auth/authService'
 import { useRouter } from 'next/router'
 import { useActionState, useEffect } from 'react'

@@ -1,29 +1,12 @@
-'use client'
-
-import { axiosFrontendInstance } from '@/lib/axiosInstance'
+import { useAuth } from '@/lib/auth/authContext'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
 
 const NavBar = () => {
   const pathname = usePathname()
   const isActive = (path: string) => pathname === path
-  const [username, setUsername] = useState<string | null>(null)
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await axiosFrontendInstance.get('/api/auth/session')
-        console.log('NavBar - session response:', response.data)
-        setUsername(response.data.username || null)
-      } catch (error) {
-        console.error('Error fetching session:', error)
-        setUsername(null)
-      }
-    }
-    getUser()
-  }, [])
+  const { username } = useAuth()
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
