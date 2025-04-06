@@ -24,7 +24,10 @@ async function decrypt(session: string | undefined = '') {
   console.log('____ SERVER sessionService: decrypt - ENV HELPER')
   envHelper()
 
+  if (!session) return null
+
   try {
+    console.log('____ SERVER sessionService: decrypt - MAYBE EMPTY SESSION - session: ', session)
     const { payload } = await jwtVerify(session, encodedKey, {
       algorithms: ['HS256'],
     })
