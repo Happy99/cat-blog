@@ -20,12 +20,8 @@ export const AdminProvider = ({
   const [articles, setArticles] = useState(initialArticles)
 
   const deleteArticle = async (articleId: string) => {
-    try {
-      await articlesService.deleteArticle(articleId)
-      setArticles(prev => prev.filter(article => article.articleId !== articleId))
-    } catch (err: any) {
-      throw new Error(err.message || 'Failed to delete article')
-    }
+    await articlesService.deleteArticle(articleId)
+    setArticles(prev => prev.filter(article => article.articleId !== articleId))
   }
 
   const value = useMemo(
