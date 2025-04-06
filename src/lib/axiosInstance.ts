@@ -7,12 +7,7 @@ const createAxiosInstance = (config: AxiosRequestConfig): AxiosInstance => {
 const setupInterceptor = (instance: AxiosInstance) => {
   instance.interceptors.request.use(
     config => {
-      // const { accessToken } = await sessionService.verifySession()
-      // if (accessToken) {
-      //   config.headers.Authorization = `Bearer ${accessToken}`
-      // }
-
-      // console.log('_____ instance.ts - REQUEST use - config', config)
+      // TODO: think how to devide FE a BE intereceptor so BE could take access_token from session
       return config
     },
     error => {
@@ -31,16 +26,12 @@ const setupInterceptor = (instance: AxiosInstance) => {
         // if response is not 200, handle error
         const { status, data } = error.response
 
-        console.log('_____ instance.ts - RESPONSE use - error', error)
-
-        // should be all APPLIFTING API errors
+        // should be all APPLIFTING API errors - think how to handle them with Next Res/Req together
         switch (status) {
           case 400:
             console.error('Bad Request:', data)
             return { code: data.code, message: data.message }
           case 401:
-            // TODO: think what to do with 401, maybe just redirect to login page
-            // should not happen, because X-API-KEY in env, but just in case
             console.error('Unauthorized:', data)
             return { code: data.code, message: data.message }
           case 403:

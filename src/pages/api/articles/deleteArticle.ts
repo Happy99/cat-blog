@@ -1,5 +1,6 @@
 import { sessionService } from '@/lib/auth/sessionService'
 import { axiosBackendInstance } from '@/lib/axiosInstance'
+import { handleApiError } from '@/utils/utils'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -20,12 +21,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         'X-API-KEY': process.env.APPLIFTING_API_KEY,
       },
     })
-    console.log('____ SERVER: articles/deleteArticle.ts - DELETED')
-    res.status(204).end()
-  } catch (error: any) {
+
+    const response = handleApiError(204, ['blog', 'deleteArticle'])
+    if (response.end) {
+      return res.status(response.status).end()
+    }
+
+    return res.status(response.status).json(response.json)
+  } catch (error) {
     console.error('Error deleting article:', error)
-    res.status(error.response?.status || 500).json({
-      error: error.response?.data?.message || 'Failed to delete article',
-    })
+    res.status(500).json({ error: 'Internal server error' })
   }
 }
