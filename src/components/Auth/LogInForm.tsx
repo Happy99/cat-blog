@@ -11,30 +11,50 @@ const LogInForm = () => {
     if (state?.success) {
       router.push('/')
     }
+    console.log('state', state)
   }, [state, router])
 
   return (
     <form action={action} className={styles.loginForm}>
-      <h3 className={styles.title}>Log In</h3>
-      <div className="form-group">
-        <label htmlFor="username" className={styles.formLabel}>
-          Name
-        </label>
-        <input id="username" name="username" className="form-control " />
-        {state?.errors?.username && <p className="text-danger">{state.errors.username}</p>}
-      </div>
+      {state?.success ? (
+        <h3 className={`${styles.title} text-success`}>Logged in successfully</h3>
+      ) : (
+        <>
+          <h3 className={styles.title}>Log In</h3>
+          <div className="form-group">
+            <label htmlFor="username" className={styles.formLabel}>
+              Name
+            </label>
+            <input
+              id="username"
+              name="username"
+              className={`form-control ${state?.errors?.username ? 'is-invalid' : ''}`}
+            />
+            {state?.errors?.username && (
+              <div className="invalid-feedback">{state.errors.username}</div>
+            )}
+          </div>
 
-      <div className="form-group">
-        <label htmlFor="password" className={styles.formLabel}>
-          Password
-        </label>
-        <input id="password" name="password" type="password" className="form-control" />
-        {state?.errors?.password && <p className="text-danger">{state.errors.password}</p>}
-      </div>
-      {state?.message && !state.success && <p className="text-danger">{state.message}</p>}
-      <button disabled={pending} type="submit" className={`btn btn-primary ${styles.button}`}>
-        {pending ? 'Logging in...' : 'Log In'}
-      </button>
+          <div className="form-group">
+            <label htmlFor="password" className={styles.formLabel}>
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              className={`form-control ${state?.errors?.password ? 'is-invalid' : ''}`}
+            />
+            {state?.errors?.password && (
+              <div className="invalid-feedback">{state.errors.password}</div>
+            )}
+          </div>
+          {state?.message && !state.success && <p className="text-danger">{state.message}</p>}
+          <button disabled={pending} type="submit" className={`btn btn-primary ${styles.button}`}>
+            {pending ? 'Logging in...' : 'Log In'}
+          </button>
+        </>
+      )}
     </form>
   )
 }
