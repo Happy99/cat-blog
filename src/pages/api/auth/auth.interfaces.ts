@@ -1,8 +1,6 @@
-import { UUID } from '@/lib/articles/articles.interfaces'
-
 export interface ILoginResponseSuccess {
   data: {
-    access_token: UUID
+    access_token: string
     expires_in: number
     token_type: string
   }

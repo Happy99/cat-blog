@@ -1,7 +1,6 @@
-import { UUID } from '@/lib/articles/articles.interfaces'
 import Link from 'next/link'
 
-const ArticleFooter = ({ articleId }: { articleId: UUID }) => {
+const ArticleFooter = ({ articleId }: { articleId: string }) => {
   return (
     <div className="d-flex flex-column flex-lg-row gap-2">
       <Link className="text-primary" href={`/articles/${articleId}`}>

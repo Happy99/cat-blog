@@ -1,4 +1,3 @@
-import { UUID } from '@/lib/articles/articles.interfaces'
 import { z } from 'zod'
 
 export const LoginFormSchema = z.object({
@@ -29,7 +28,7 @@ export type FormState =
 
 export type SessionPayload = {
   username: string
-  accessToken: UUID
+  accessToken: string
   tokenType: string
   expiresIn: number
 }
