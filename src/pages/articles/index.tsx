@@ -25,8 +25,8 @@ export default function ArticlesPage({ articles }: IArticlesProps) {
       <PageHeading title="Recent articles" />
 
       <div className="d-flex flex-column gap-4 mt-5">
-        {articles.map((article: IArticle, index: number) => (
-          <RecentArticle key={index} article={article} />
+        {articles.map((article: IArticle) => (
+          <RecentArticle key={article.articleId} article={article} />
         ))}
       </div>
     </>
