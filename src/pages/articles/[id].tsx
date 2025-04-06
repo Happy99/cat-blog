@@ -34,7 +34,7 @@ export const getStaticProps: GetStaticProps<Props> = async context => {
 
   // I assume db will be small, so fetching all articles and then slicing, not best solution - could be refactored if db grows
   const allArticles = await articlesService.getArticles()
-  const relatedArticles = allArticles.filter(a => a.articleId.toString() !== articleId).slice(0, 4) // Limit to 4 artcles
+  const relatedArticles = allArticles.filter(a => a.articleId !== articleId).slice(0, 4) // Limit to 4 artcles
 
   return {
     props: { article, relatedArticles },

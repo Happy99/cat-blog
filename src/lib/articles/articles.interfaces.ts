@@ -1,9 +1,5 @@
 //TODO: go trough types, some of them are read only, some of them are DateTime
-
 import { IPagination } from '@/pages/api/api.interfaces'
-import { v4 as uuidv4 } from 'uuid'
-
-export type UUID = ReturnType<typeof uuidv4>
 
 export interface IAllArticles {
   pagination: IPagination
@@ -11,10 +7,10 @@ export interface IAllArticles {
 }
 
 export interface IArticle {
-  articleId: UUID
+  articleId: string
   title: string
   perex: string
-  imageId: UUID
+  imageId: string
   createdAt: string
   lastUpdatedAt: string
   author: 'Petr Stastny'
@@ -26,10 +22,10 @@ export interface IArticleDetails extends IArticle {
 }
 
 export interface IComment {
-  commentId: UUID
-  articleId: UUID
+  commentId: string
+  articleId: string
   author: string
   content: string
-  postedAt: Date
+  postedAt: string
   score: number
 }
