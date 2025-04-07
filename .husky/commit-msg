@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+. "$(dirname "$0")/_/husky.sh"
+
+COMMIT_MSG=$(cat "$1")
+if echo "$COMMIT_MSG" | grep -q "RELEASE"; then
+  echo "Detected 'RELEASE' in commit message: $COMMIT_MSG"
+  echo "Building project..."
+  npm run build || { echo "Build failed, aborting push to production"; exit 1; }
+  echo "Build succeeded, pushing to production branch..."
+  git checkout production || git checkout -b production
+  git merge --ff-only master || { echo "Merge conflict detected, aborting"; exit 1; }
+  git push origin production
+  git checkout master
+  echo "Pushed to production and switched back to master"
+fi
