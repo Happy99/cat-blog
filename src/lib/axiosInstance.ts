@@ -25,6 +25,7 @@ const setupInterceptor = (instance: AxiosInstance) => {
       if (error.response) {
         // if response is not 200, handle error
         const { status, data } = error.response
+        // console.log('_____ instance.ts - RESPONSE use - status & data', status, data)
 
         // should be all APPLIFTING API errors - think how to handle them with Next Res/Req together
         switch (status) {
@@ -37,6 +38,9 @@ const setupInterceptor = (instance: AxiosInstance) => {
           case 403:
             console.error('Forbidden:', data)
             return { code: data.code, message: data.message }
+          case 404:
+            console.error('Not Found:', data)
+            return { code: status, message: 'Not Found' }
           default:
             console.error('Error:', data)
         }
