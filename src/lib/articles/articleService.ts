@@ -20,15 +20,18 @@ const getArticle = async (articleId: string): Promise<IArticleDetails> => {
   const response: ApiResponse<IArticleDetails> = await axiosBackendInstance.get(
     `/articles/${articleId}`
   )
+
   return response.data
 }
 
 const deleteArticle = async (articleId: string): Promise<string> => {
   const response = await axiosFrontendInstance.delete(`/api/articles/deleteArticle?id=${articleId}`)
+
   if (response.status === 204) {
     toast.success('Article deleted successfully')
     return 'Article deleted successfully'
   }
+
   toast.error('Failed to delete article')
   return 'Failed to delete article'
 }
