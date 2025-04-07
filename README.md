@@ -14,10 +14,10 @@ This is a [Next.js](https://nextjs.org) project.
 
 ### If time allows
 
-- storybook
+- storybook - I think it is no needed rn, Iam using bootstrap with basic attributes
 - Jest test
 - playwright (e2e)
-- pipes - build test, vercel github deploy
+- pipes - build test, add Husky - with release build&push to production branch, vercel github deploy
 
 - Why no Redux?
 
@@ -38,12 +38,30 @@ Interesting POC to me this blog.
   not in authentication where I wanted to enrypt my sesion with 'jose' package.
 - once I got used to what is server and what is client side it developming was faster and faster
 - it needs strong understanding of getStaticProps, getStaticPaths and getServerSideProps -> ALL OF THESE ARE SERVER SIDE
+- sometimes I use annonymous functions, sometimes I use classic old fashion functions - wanted to test this, specially if there is any miss behaviour, I saw few PRs where someone whas upset about it because it cannot be tested - which I disagree with and I can clearly say, until it is exported or inside variable, there is no issue ... Should be also refactored to use same approach across my project - maybe would be good to lint just arrow functions - I like them more :)
+- The longer I code inside Next.js the better the feeling is, I see more code smells and more work to do ...
+- different approaches between deleting images and deleting articles - wanted to test the way with Pages router and one way with query in URL - to me it's good POC for both concepts
 
 ### Know bugs:
 
 - when session is cleared in browser or it expires, context does not clear username -> navbar contains admin
 - refactoring, refactoring ... when I was really struggling I was putting everyting in once place, now it hurts
 - when article is created, it can be seen in related articles but when I click it returns 404 -> page refresh helps (ISR issue prob.)
+- create and edit article are accessible, post cannot be done - think about high order component - middleware is not recommended by Axios
+- when creating new article, image is added, than removed trough file explorer upload image stays and image can be uploaded
+- error handling at all - I tried do it properly in Admin Dashobard but I bet I forgot something somwhere + in need of refactoring, refactoring ...
+
+### Missing:
+
+- image deletion with article deletion
+- fetch image for articles
+- edit article
+- markdown for articles
+- admin - article table - fancy component (I would bet on ShadCN)
+- publish button for article - I'm using simple adminContext, could store article there before POST (publish)
+- comments
+- paginations
+- optionally implement article ordering: I would simple use drag and drop with ShadCN and update article.lastUpdateDate
 
 ### Ideas:
 
