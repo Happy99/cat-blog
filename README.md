@@ -44,3 +44,13 @@ Interesting POC to me this blog.
 - when session is cleared in browser or it expires, context does not clear username -> navbar contains admin
 - refactoring, refactoring ... when I was really struggling I was putting everyting in once place, now it hurts
 - when article is created, it can be seen in related articles but when I click it returns 404 -> page refresh helps (ISR issue prob.)
+
+### Ideas:
+
+- axios rozdelit na FE a BE - ne dohromady, pak mozna budu schopen fetchnout session
+- ⁠pres get clanku zkusit, co vlastne vraci axios, pokud ma vratit error - jestli tim mym returnem nevratim 200 vzdy
+- ⁠get clanku prevest na BE a fetchnout s tim i fotky a na be vratit artickle, kterej bude mit atribut img
+- e2e test - prihlasit, vidim “login success”
+- ⁠unit test - fetchne clanky
+- ⁠createArticle - pokud pridam img, nepujde odeslat form dokud nedam upload img (next step - udelat v jednom - takhle aspon vidim preview)
+- ⁠editArticle - nepujde odeslat, pokud se zadna value nezmeni (jeden state - false a na onChange true a pred odeslanim checknout - odeslat muze byt disabled a pod btn text, ze musi byt prvne zmena
