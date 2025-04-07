@@ -4,7 +4,7 @@ import { useActionState, useEffect } from 'react'
 import styles from './loginform.module.css'
 
 const LogInForm = () => {
-  const [state, action, pending] = useActionState(authService.login, undefined) //TODO add default state
+  const [state, action, pending] = useActionState(authService.login, undefined)
   const router = useRouter()
 
   useEffect(() => {
@@ -13,6 +13,7 @@ const LogInForm = () => {
     }
   }, [state, router])
 
+  // TODO: refactor this, make input component, etc with validation to avoid repetations
   return (
     <form action={action} className={styles.loginForm}>
       {state?.success ? (

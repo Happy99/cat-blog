@@ -4,28 +4,32 @@ import { handleApiError } from '@/utils/utils'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'DELETE') {
+  if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const articleId = req.query.id as string
   const sessionData = await sessionService.verifySession(req)
   if (!sessionData) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
 
-  //TODO: handle image deletion
-  try {
-    const reponse = await axiosBackendInstance.delete(`/articles/${articleId}`, {
-      headers: {
-        Authorization: `Bearer ${sessionData.accessToken}`,
-        'X-API-KEY': process.env.APPLIFTING_API_KEY,
-      },
-    })
+  const { title, perex, content, imageId } = req.body
 
-    handleApiError(reponse.status, ['blog', 'deleteArticle'], res)
+  try {
+    const response = await axiosBackendInstance.post(
+      '/articles',
+      { title, perex, content, imageId },
+      {
+        headers: {
+          Authorization: `Bearer ${sessionData.accessToken}`,
+          'X-API-KEY': process.env.APPLIFTING_API_KEY,
+        },
+      }
+    )
+
+    handleApiError(response.status, ['blog', 'createArticle'], res)
   } catch (error) {
-    console.error('Error deleting article:', error)
+    console.error('Error creating article:', error)
     res.status(500).json({ error: 'Internal server error' })
   }
 }

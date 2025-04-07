@@ -45,17 +45,28 @@ export async function validateFrontendSession(
   return sessionData
 }
 
-export const handleApiError = (statusCode: number, from: string[], res: NextApiResponse) => {
-  const nextErrors: ErrorStructure = {
-    blog: {
-      deleteArticle: {
-        204: 'Article deleted successfully',
-        401: 'API key is missing or invalid',
-        403: 'Access token is missing or invalid',
-      },
+export const nextErrors: ErrorStructure = {
+  blog: {
+    createArticle: {
+      200: 'Article created successfully',
+      401: 'API key is missing or invalid',
+      403: 'Access token is missing or invalid',
     },
-  }
+    deleteArticle: {
+      204: 'Article deleted successfully',
+      401: 'API key is missing or invalid',
+      403: 'Access token is missing or invalid',
+    },
+  },
+  images: {
+    upload: {
+      201: 'Image uploaded successfully',
+      401: 'API key is missing or invalid',
+    },
+  },
+}
 
+export const handleApiError = (statusCode: number, from: string[], res: NextApiResponse) => {
   let errorMessage = ''
   let current: ErrorPath | ErrorMessages = nextErrors
   for (const key of from) {

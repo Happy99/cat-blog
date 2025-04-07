@@ -1,8 +1,12 @@
-import { FormState, LoginFormSchema } from '@/lib/definitions'
+import { LoginFormSchema, LoginFormState } from '@/lib/definitions'
 import { LoginResponse } from '@/pages/api/auth/auth.interfaces'
 import { axiosFrontendInstance } from '../axiosInstance'
 
-async function login(state: FormState, formData: FormData): Promise<FormState> {
+// TODO: refactor this - coulb be hook, needs better error handling
+async function login(
+  state: LoginFormState | undefined,
+  formData: FormData
+): Promise<LoginFormState> {
   const validatedFields = LoginFormSchema.safeParse({
     username: formData.get('username'),
     password: formData.get('password'),
