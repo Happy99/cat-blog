@@ -1,4 +1,4 @@
-name: Build on Master Push
+name: Test build & release to production
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
       - master
       - production
 
-build-master:
+jobs:
+  build-master:
     if: github.ref == 'refs/heads/master' # my master branch
     runs-on: ubuntu-latest
     env:
