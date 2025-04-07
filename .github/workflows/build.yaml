@@ -4,9 +4,36 @@ on:
   push:
     branches:
       - master
+      - production
 
-jobs:
-  build:
+build-master:
+    if: github.ref == 'refs/heads/master' # my master branch
+    runs-on: ubuntu-latest
+    env:
+      APPLIFTING_API_URL: ${{ secrets.APPLIFTING_API_URL }}
+      APPLIFTING_API_KEY: ${{ secrets.APPLIFTING_API_KEY }}
+      NEXT_PUBLIC_FRONTEND_API_URL: ${{ secrets.NEXT_PUBLIC_FRONTEND_API_URL }}
+      NEXT_PUBLIC_TEST_CLIENT: ${{ secrets.NEXT_PUBLIC_TEST_CLIENT }}
+      TEST_DEV: ${{ secrets.TEST_DEV }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run build
+        run: npm run build
+
+  build-production:
+    if: github.ref == 'refs/heads/production' # production branch - husky should do auto build & release
     runs-on: ubuntu-latest
     env:
       APPLIFTING_API_URL: ${{ secrets.APPLIFTING_API_URL }}
