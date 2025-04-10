@@ -52,7 +52,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     })
 
-    handleApiError(response.status, ['images', 'upload'], res)
+    // 10/04/2025: I am getting 200, but should be 201 because of the post request, maybe axios? I would bet that 201 worked before in commitID: 14d8aff259b58dbe42fa4b19dc25bfaea49769c0
+    if (response.status === 200 || response.status === 201) {
+      return res.status(response.status).json(response.data)
+    }
+
+    handleApiError(response.status, ['images', 'uploadImage'], res)
   } catch (error) {
     console.error('Error creating article:', error)
     res.status(500).json({ error: 'Internal server error' })

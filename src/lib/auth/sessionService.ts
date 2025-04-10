@@ -72,9 +72,13 @@ const verifySession = cache(async (req: NextApiRequest) => {
   const session = req.cookies.session
   const sessionData = await decrypt(session)
 
+  console.log('____ SERVER sessionService: verifySession - sessionData 1 555: ', sessionData)
+
   if (!sessionData?.username) {
     return null
   }
+
+  console.log('____ SERVER sessionService: verifySession - sessionData 2 555: ', sessionData)
 
   return {
     isAuth: true,

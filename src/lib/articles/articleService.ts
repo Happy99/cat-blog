@@ -21,6 +21,16 @@ const getArticle = async (articleId: string): Promise<IArticleDetails> => {
     `/articles/${articleId}`
   )
 
+  console.log('___ SERVER: getArticle - response: ', response.data)
+  return response.data
+}
+
+const getArticleBackend = async (articleId: string): Promise<IArticleDetails> => {
+  console.log('___ CLIENT: getArticleBackend START')
+  const response: ApiResponse<IArticleDetails> = await axiosBackendInstance.get(
+    `/api/articles/getArticle?id=${articleId}`
+  )
+  console.log('___ CLIENT: getArticleBackend - response: ', response)
   return response.data
 }
 
@@ -94,7 +104,8 @@ const articleUploadImage = async (
     const response = await axiosFrontendInstance.post('/api/images/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
-    const uploadedImageId = response.data.imageId
+    // 10/04/2025: response.data is an array of objects now, something very weird happened, API is returning 200 instead of 201 now, I would bet that 201 worked before in commitID: 14d8aff259b58dbe42fa4b19dc25bfaea49769c0
+    const uploadedImageId = response.data.length > 0 ? response.data[0].imageId : null
 
     if (uploadedImageId) {
       setImageId(uploadedImageId)
@@ -106,9 +117,32 @@ const articleUploadImage = async (
 
     toast.error('No imageId returned from server')
     return 'No imageId returned from server'
-  } catch (err) {
-    console.error('Upload error:', err)
+  } catch (error) {
+    console.error('Upload error:', error)
     return 'Failed to upload image'
+  }
+}
+
+// problem je, ze getArticle vrati neco jineho na clientu - parsovane response.data do konzole v chromu, ale na serveru to vraci klasicky objekt
+const articleDeleteImage = async (articleId: string): Promise<string> => {
+  try {
+    const article = await getArticleBackend(articleId)
+    console.log('___ CLIENT: articleDeleteImage - article: ', article)
+    const imageId = article.imageId
+    console.log('___ CLIENT: articleDeleteImage - imageId: ', imageId)
+    const response = await axiosFrontendInstance.delete(`/api/images/deleteImage?id=${imageId}`)
+    console.log('___ CLIENT: articleDeleteImage - response: ', response)
+
+    if (response.status === 204) {
+      toast.success('Image deleted successfully')
+      return 'Image deleted successfully'
+    }
+
+    toast.error('Failed to delete image')
+    return 'Failed to delete image'
+  } catch (error) {
+    console.error('Delete image error:', error)
+    return 'Failed to delete image'
   }
 }
 
@@ -118,4 +152,5 @@ export const articlesService = {
   deleteArticle,
   createArticle,
   articleUploadImage,
+  articleDeleteImage,
 }

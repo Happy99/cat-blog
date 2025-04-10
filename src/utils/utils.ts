@@ -46,7 +46,19 @@ export async function validateFrontendSession(
 }
 
 export const nextErrors: ErrorStructure = {
+  general: {
+    unauthorized: {
+      401: 'Unauthorized',
+    },
+    internalServerError: {
+      500: 'Internal server error',
+    },
+  },
   blog: {
+    getArticle: {
+      200: 'Article fetched successfully',
+      401: 'API key is missing or invalid',
+    },
     createArticle: {
       200: 'Article created successfully',
       401: 'API key is missing or invalid',
@@ -57,10 +69,24 @@ export const nextErrors: ErrorStructure = {
       401: 'API key is missing or invalid',
       403: 'Access token is missing or invalid',
     },
+    patchArticle: {
+      200: 'Article updated successfully',
+      401: 'API key is missing or invalid',
+      403: 'Access token is missing or invalid',
+    },
   },
   images: {
-    upload: {
+    getImage: {
+      200: 'Image fetched successfully',
+      401: 'API key is missing or invalid',
+    },
+    uploadImage: {
+      200: 'Image uploaded successfully', // 10/04/2025: I am getting 200, but should be 201 because of the post request, maybe axios? I would bet that 201 worked before in commitID: 14d8aff259b58dbe42fa4b19dc25bfaea49769c0
       201: 'Image uploaded successfully',
+      401: 'API key is missing or invalid',
+    },
+    deleteImage: {
+      204: 'Image deleted successfully',
       401: 'API key is missing or invalid',
     },
   },
@@ -81,6 +107,10 @@ export const handleApiError = (statusCode: number, from: string[], res: NextApiR
 
   if (statusCode === 204) {
     return res.status(statusCode).end()
+  }
+
+  if (statusCode === 500) {
+    return res.status(200).json({ message: 'Internal server error' })
   }
 
   return res.status(statusCode).json(errorMessage || 'An unknown error occurred')

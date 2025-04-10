@@ -18,7 +18,8 @@ const setupInterceptor = (instance: AxiosInstance) => {
   // resnponse handler
   instance.interceptors.response.use(
     response => {
-      // console.log('_____ instance.ts - RESPONSE use - response', response)
+      // console.log('_____ instance.ts - RESPONSE use - response', response.data)
+      // console.log('_____ instance.ts - RESPONSE use - response', response.status)
       return response
     },
     error => {
@@ -30,16 +31,16 @@ const setupInterceptor = (instance: AxiosInstance) => {
         // should be all APPLIFTING API errors - think how to handle them with Next Res/Req together
         switch (status) {
           case 400:
-            console.error('Bad Request:', data)
+            console.error('AXIOS INSTANCE: Bad Request:', data)
             return { code: data.code, message: data.message }
           case 401:
-            console.error('Unauthorized:', data)
+            console.error('AXIOS INSTANCE: Unauthorized:', data)
             return { code: data.code, message: data.message }
           case 403:
-            console.error('Forbidden:', data)
+            console.error('AXIOS INSTANCE: Forbidden:', data)
             return { code: data.code, message: data.message }
           case 404:
-            console.error('Not Found:', data)
+            console.error('AXIOS INSTANCE: Not Found:', data)
             return { code: status, message: 'Not Found' }
           default:
             console.error('Error:', data)

@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const sessionData = await sessionService.verifySession(req)
   if (!sessionData) {
-    return res.status(401).json({ error: 'Unauthorized' })
+    return handleApiError(401, ['general', 'unauthorized'], res)
   }
 
   const { title, perex, content, imageId } = req.body
@@ -26,6 +26,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
       }
     )
+
+    console.log('___ SERVER: new article response: ', response.data)
+    console.log('___ SERVER: new article response STATUS: ', response.status)
 
     handleApiError(response.status, ['blog', 'createArticle'], res)
   } catch (error) {
