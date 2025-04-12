@@ -86,6 +86,8 @@ Sorry for that, trust me, this is not something I would really do :D.
 - hamburger menu does not work after adding bootstrap javascript into document manually
 - error handling at all - I tried do it properly in Admin Dashobard but even there I see I failed multiple times + in need of refactoring, refactoring ...
 - missmatch between file and folder naming, please trust me, I really would love to refactor those. This was my first real next.js app so many times I struggled and was trying different methods
+- large images cannot be uploaded, need to handle error there and shouw some toast to user about that
+- I implemented perrex into new & edit article => from my point of view, it should be there so we do not randomply slice it
 
 ### Missing - for those I ran out of time:
 
