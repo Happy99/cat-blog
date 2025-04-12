@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
         pathname: '/api/images/getImage**',
       },
       {
+        protocol: 'https',
+        hostname: 'fullstack.exercise.applifting.cz',
+        pathname: '/api/images/getImage**',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
         pathname: '/api/images/getImage**',
