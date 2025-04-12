@@ -7,7 +7,11 @@ export const LoginFormSchema = z.object({
 
 export const NewArticleFormSchema = z.object({
   title: z.string().min(1, { message: 'Title is required' }).trim(),
-  perex: z.string().min(1, { message: 'Perex is required' }).trim(),
+  perex: z
+    .string()
+    .min(1, { message: 'Perex is required' })
+    .max(100, { message: 'Perex must be less than 100 characters' })
+    .trim(),
   content: z.string().min(1, { message: 'Content is required' }).trim(),
   imageId: z.string().min(1, { message: 'Image is required' }).trim(),
 })
