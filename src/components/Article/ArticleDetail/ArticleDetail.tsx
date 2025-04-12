@@ -3,7 +3,9 @@ import { IArticleDetails } from '@/lib/articles/articles.interfaces'
 import Image from 'next/image'
 
 const ArticleDetail = ({ article }: { article: IArticleDetails }) => {
-  const image = article.imageId ? `/api/images/getImage?id=${article.imageId}` : '/cat.jpg'
+  const image = article.imageId
+    ? `/api/images/getImage?id=${encodeURIComponent(article.imageId)}`
+    : '/cat.jpg'
 
   return (
     <article className="col-md-8 col-12 d-flex flex-column gap-4">

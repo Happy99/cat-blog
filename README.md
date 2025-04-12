@@ -54,6 +54,7 @@ Interesting POC to me this blog.
 - removing article without image cause error because of imageId is null - should be handeled and returned that just article was deleted if so
 - deleting article with imageId that does not exist in db - images cause error - it needs to be handled so just article will be deleted
 - need to revalidate paths to article detail
+- hamburger menu does not work after adding bootstrap javascript into document manually
 - error handling at all - I tried do it properly in Admin Dashobard but I bet I forgot something somwhere + in need of refactoring, refactoring ...
 
 ### Missing:
@@ -67,13 +68,8 @@ Interesting POC to me this blog.
 ### Ideas:
 
 - axios rozdelit na FE a BE - ne dohromady, pak mozna budu schopen fetchnout session
-- ⁠pres get clanku zkusit, co vlastne vraci axios, pokud ma vratit error - jestli tim mym returnem nevratim 200 vzdy
-- ⁠get clanku prevest na BE a fetchnout s tim i fotky a na be vratit artickle, kterej bude mit atribut img
 - e2e test - prihlasit, vidim “login success”
-- ⁠unit test - fetchne clanky
-- ⁠createArticle - pokud pridam img, nepujde odeslat form dokud nedam upload img (next step - udelat v jednom - takhle aspon vidim preview)
-- ⁠editArticle - nepujde odeslat, pokud se zadna value nezmeni (jeden state - false a na onChange true a pred odeslanim checknout - odeslat muze byt disabled a pod btn text, ze musi byt prvne zmena
 
-http://localhost:3000/admin/articles
-http://localhost:3000/admin/articles/new
-http://localhost:3000/admin/articles/edit/c2193e5b-09ad-4b15-8639-c0a623e66b11
+project id - prj_6bEHBKWjjVMMnKJ5VETp0h3CcoUJ
+
+token (github actions) - Dfbjg69GfSjAZFB6T0Ug8pJP

@@ -4,7 +4,9 @@ import { IArticle } from '@/lib/articles/articles.interfaces'
 import Image from 'next/image'
 
 const RecentArticle = ({ article }: { article: IArticle }) => {
-  const image = article.imageId ? `/api/images/getImage?id=${article.imageId}` : '/cat.jpg'
+  const image = article.imageId
+    ? `/api/images/getImage?id=${encodeURIComponent(article.imageId)}`
+    : '/cat.jpg'
 
   return (
     <div className="row">
