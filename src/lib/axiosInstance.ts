@@ -35,7 +35,7 @@ const setupInterceptor = (instance: AxiosInstance) => {
             return { code: data.code, message: data.message }
           case 401:
             console.error('AXIOS INSTANCE: Unauthorized:', data)
-            return { code: data.code, message: data.message }
+            return { status }
           case 403:
             console.error('AXIOS INSTANCE: Forbidden:', data)
             return { code: data.code, message: data.message }

@@ -26,23 +26,31 @@ export async function validateFrontendSession(
     cookies: NextApiRequestCookies
   }
 ) {
+  console.log('_***____ SERVER: validateFrontendSession START')
   const sessionResponse = await axiosFrontendInstance.get('/api/auth/session', {
     headers: {
       Cookie: req.headers.cookie ?? '',
     },
   })
-  const sessionData = sessionResponse.data
 
-  if (!sessionData.username) {
-    return {
-      redirect: {
-        destination: '/auth/login',
-        permanent: false,
-      },
-    }
+  console.log(
+    '_***********************____ SERVER: validateFrontendSession - sessionResponse',
+    sessionResponse
+  )
+
+  if (sessionResponse.status !== 200) {
+    console.log('_____ SERVER: validateFrontendSession - redirecting to /auth/login')
+
+    return
   }
 
-  return sessionData
+  console.log(
+    '_*****____ SERVER: validateFrontendSession - sessionResponse',
+    sessionResponse.status,
+    sessionResponse.data
+  )
+
+  return sessionResponse.data
 }
 
 export const nextErrors: ErrorStructure = {

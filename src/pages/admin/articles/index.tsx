@@ -29,7 +29,16 @@ export const getServerSideProps: GetServerSideProps<AdminProps> = async context 
   const { req } = context
 
   try {
-    await validateFrontendSession(req)
+    const response = await validateFrontendSession(req)
+    if (response.status !== 200) {
+      return {
+        redirect: {
+          destination: '/auth/login',
+          permanent: false,
+        },
+      }
+    }
+
     const articles = await articlesService.getArticles()
 
     return {

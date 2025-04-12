@@ -1,23 +1,30 @@
 import ArticleForm from '@/components/admin/ArticleForm'
 import { IArticleDetails } from '@/lib/articles/articles.interfaces'
 import { articlesService } from '@/lib/articles/articleService'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { validateFrontendSession } from '@/utils/utils'
+import { GetServerSideProps } from 'next'
 
 interface Props {
   readonly article: IArticleDetails
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const articles = await articlesService.getArticles()
-  const paths = articles.map(article => ({
-    params: { id: String(article.articleId) },
-  }))
-
-  return { paths, fallback: false }
+export default function EditArticlePage({ article }: Props) {
+  return <ArticleForm article={article} />
 }
 
-export const getStaticProps: GetStaticProps<Props> = async context => {
-  const params = context.params
+export const getServerSideProps: GetServerSideProps<Props> = async context => {
+  const { req, params } = context
+
+  const response = await validateFrontendSession(req)
+  console.log('_____ SERVER: edit article page - response', response)
+  if (!response || response.status !== 200) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    }
+  }
 
   if (!params?.id) {
     return { notFound: true }
@@ -34,10 +41,5 @@ export const getStaticProps: GetStaticProps<Props> = async context => {
 
   return {
     props: { article },
-    revalidate: 60,
   }
-}
-
-export default function EditArticlePage({ article }: Props) {
-  return <ArticleForm article={article} />
 }
