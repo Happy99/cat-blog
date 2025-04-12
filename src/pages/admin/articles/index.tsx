@@ -30,7 +30,7 @@ export const getServerSideProps: GetServerSideProps<AdminProps> = async context 
 
   try {
     const response = await validateFrontendSession(req)
-    if (response.status !== 200) {
+    if (response?.status !== 200) {
       return {
         redirect: {
           destination: '/auth/login',

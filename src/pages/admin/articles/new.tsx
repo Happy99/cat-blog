@@ -11,7 +11,8 @@ export const getServerSideProps: GetServerSideProps = async context => {
 
   try {
     const response = await validateFrontendSession(req)
-    if (response.status !== 200) {
+    console.log('_____ SERVER: new article page - response', response?.status)
+    if (response?.status !== 200) {
       return {
         redirect: {
           destination: '/auth/login',

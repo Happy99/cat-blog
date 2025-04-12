@@ -38,19 +38,13 @@ export async function validateFrontendSession(
     sessionResponse
   )
 
-  if (sessionResponse.status !== 200) {
-    console.log('_____ SERVER: validateFrontendSession - redirecting to /auth/login')
-
-    return
-  }
-
   console.log(
     '_*****____ SERVER: validateFrontendSession - sessionResponse',
     sessionResponse.status,
     sessionResponse.data
   )
 
-  return sessionResponse.data
+  return sessionResponse
 }
 
 export const nextErrors: ErrorStructure = {
