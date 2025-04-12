@@ -67,9 +67,5 @@ Interesting POC to me this blog.
 
 ### Ideas:
 
-- axios rozdelit na FE a BE - ne dohromady, pak mozna budu schopen fetchnout session
-- e2e test - prihlasit, vidim “login success”
-
-project id - prj_6bEHBKWjjVMMnKJ5VETp0h3CcoUJ
-
-token (github actions) - Dfbjg69GfSjAZFB6T0Ug8pJP
+- axios rozdelit na FE a BE - ne dohromady, pak mozna budu schopen fetchnout session a pridat authorization header
+- e2e test (playwright) - prihlasit, vidim “login success”
