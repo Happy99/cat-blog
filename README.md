@@ -1,3 +1,23 @@
+# Cat Blog
+
+## Table of Contents
+
+- [Running the Application](#running-the-application)
+  - [Prerequisites](#prerequisites)
+  - [Development Mode](#development-mode)
+  - [Production Build](#production-build)
+  - [Production Start](#production-start)
+  - [Testing](#testing)
+  - [Additional Commands](#additional-commands)
+  - [Live App](#live-app)
+  - [Credentials to test admin dashboard](#credentials-to-test-admin-dashboard)
+- [Credentials](#credentials)
+- [Story](#story)
+- [Known Bugs](#known-bugs)
+- [Missing Features](#missing-features)
+- [Ideas](#ideas)
+- [Tech Stack](#tech-stack)
+
 This is a [Next.js](https://nextjs.org) project.
 
 ### Running the Application
@@ -52,11 +72,13 @@ npm run test
 - Format code: `npm run format`
 - Check code formatting: `npm run format:check`
 
-### Credentials to test admin dashboard
+#### Live App
 
-```bash
+The application is running at: [cat-blog](https://cat-blog-red.vercel.app/articles)
+
+#### Credentials to test admin dashboard
+
 I will sent those trough email to Simon.
-```
 
 ### Story:
 
