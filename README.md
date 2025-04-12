@@ -97,7 +97,7 @@ If I had more time, I’d definitely go over the whole authentication setup agai
 Also once I moved articles to backend, I found out that I cannot fetch data trough my API because my server is not running (https://github.com/Happy99/cat-blog/commit/f025b77fee11de3a74b40fdee8403a2d20546bc3). Didn’t know about that — would be really cool to learn more about it. Not even sure if it really true, it make sense, but really I would like to dive into this much more.
 
 And yeah… refactoring, refactoring. When I was really struggling, I just dumped everything into one place to make it work. Now? It hurts. A lot. Same with file and folder naming...
-Sorry for that, trust me, this is not something I would really do :D.
+Sorry for that, trust me, this is not something I would really do :D. ("the goal here is not just to see if you can do an app, but how you do it. So please write it as if it were a big production app, that includes code structure, validations, usage of git, documentation, tests, linting, etc." - here I failed for sure.)
 
 ### Know bugs:
 
