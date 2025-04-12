@@ -26,7 +26,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log('___ server get image response: ', response)
 
     res.setHeader('Content-Type', response.headers['content-type'] || 'image/jpeg')
-    res.status(200).send(Buffer.from(response.data))
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
+
+    res.status(200).send(response.data)
   } catch (error) {
     console.error('Error fetching image:', error)
     res.status(500).json({
