@@ -249,7 +249,7 @@ const articleDeleteImage = async (
   try {
     let imageIdtoDelete = imageId ?? ''
     if (articleId) {
-      const article = await getArticleBackend(articleId)
+      const article = await getArticle(articleId)
       imageIdtoDelete = article.imageId
     }
 
