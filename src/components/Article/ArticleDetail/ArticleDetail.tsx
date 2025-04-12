@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 const ArticleDetail = ({ article }: { article: IArticleDetails }) => {
   const image = article.imageId
-    ? `/api/images/getImage?id=${encodeURIComponent(article.imageId)}&w=760&q=75`
+    ? `/api/images/getImage?id=${encodeURIComponent(article.imageId)}`
     : '/cat.jpg'
 
   return (

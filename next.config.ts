@@ -19,8 +19,8 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'fullstack.exercise.applifting.cz',
-        pathname: '/images/**',
+        hostname: '**.exercise.applifting.cz',
+        // pathname: '/images/**',
       },
       {
         protocol: 'http',
