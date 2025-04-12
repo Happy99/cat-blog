@@ -139,19 +139,21 @@ export default function ArticleImage({
             height={75}
             className="img-thumbnail"
           />
-          <div className="d-flex flex-row align-items-center gap-2">
-            <button type="button" className="btn text-primary p-0" onClick={triggerFileInput}>
-              Upload new
-            </button>
-            <span className="text-muted">|</span>
-            <button
-              type="button"
-              className="btn text-danger p-0"
-              onClick={() => handleDeleteImage()}
-            >
-              Delete
-            </button>
-          </div>
+          {!image && (
+            <div className="d-flex flex-row align-items-center gap-2">
+              <button type="button" className="btn text-primary p-0" onClick={triggerFileInput}>
+                Upload new
+              </button>
+              <span className="text-muted">|</span>
+              <button
+                type="button"
+                className="btn text-danger p-0"
+                onClick={() => handleDeleteImage()}
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
       )}
 
