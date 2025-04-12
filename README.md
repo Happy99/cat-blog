@@ -1,5 +1,14 @@
 # Cat Blog
 
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-blue)](https://github.com/Happy99/cat-blog#)
+
+## Clone Repository
+
+```bash
+git clone git@github.com:Happy99/cat-blog.git
+cd cat-blog
+```
+
 ## Table of Contents
 
 - [Running the Application](#running-the-application)
