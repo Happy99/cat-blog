@@ -49,13 +49,13 @@ Interesting POC to me this blog.
 - when article is created, it can be seen in related articles but when I click it returns 404 -> page refresh helps (ISR issue prob.)
 - create and edit article are accessible, post cannot be done - think about high order component - middleware is not recommended by Axios
 - when creating new article, image is added, than removed trough file explorer upload image stays and image can be uploaded
+- removing article without image cause error because of imageId is null - should be handeled and returned that just article was deleted if so
 - error handling at all - I tried do it properly in Admin Dashobard but I bet I forgot something somwhere + in need of refactoring, refactoring ...
 
 ### Missing:
 
-- image deletion with article deletion
-- fetch image for articles
 - edit article
+- fetch image for articles
 - markdown for articles
 - admin - article table - fancy component (I would bet on ShadCN)
 - publish button for article - I'm using simple adminContext, could store article there before POST (publish)

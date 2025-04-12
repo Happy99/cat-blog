@@ -28,6 +28,10 @@ export interface NewArticleFormState {
     content?: string[]
     imageId?: string[]
   }
+  title?: string
+  perex?: string
+  content?: string
+  imageId?: string
   message?: string
   success?: boolean
 }

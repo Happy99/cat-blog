@@ -1,4 +1,4 @@
-//TODO: go trough types, some of them are read only, some of them are DateTime
+//TODO: go trough types, make them better - think about structure between article in blog and article in admin
 import { IPagination } from '@/pages/api/api.interfaces'
 
 export interface IAllArticles {
@@ -13,7 +13,7 @@ export interface IArticle {
   imageId: string
   createdAt: string
   lastUpdatedAt: string
-  author: 'Petr Stastny'
+  author: string
 }
 
 export interface IArticleDetails extends IArticle {

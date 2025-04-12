@@ -36,7 +36,6 @@ const getArticleBackend = async (articleId: string): Promise<IArticleDetails> =>
 
 const deleteArticle = async (articleId: string): Promise<string> => {
   const response = await axiosFrontendInstance.delete(`/api/articles/deleteArticle?id=${articleId}`)
-
   if (response.status === 204) {
     toast.success('Article deleted successfully')
     return 'Article deleted successfully'
@@ -79,17 +78,83 @@ const createArticle = async (
       toast.success('Article created successfully')
       return {
         message: 'Article created successfully',
+        success: true,
+        title,
+        perex,
+        content,
+        imageId,
       }
     }
 
     toast.error('Failed to create article')
     return {
       message: 'Failed to create article',
+      success: false,
     }
   } catch (error) {
     console.error('Article creation error:', error)
     return {
       message: 'Failed to create article',
+      success: false,
+    }
+  }
+}
+
+const updateArticle = async (
+  state: NewArticleFormState | undefined,
+  formData: FormData
+): Promise<NewArticleFormState> => {
+  const articleId = formData.get('articleId') as string
+  const validatedFields = NewArticleFormSchema.safeParse({
+    title: formData.get('title'),
+    perex: formData.get('perex'),
+    content: formData.get('content'),
+    imageId: formData.get('imageId'),
+  })
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Validation failed',
+      success: false,
+    }
+  }
+
+  const { title, perex, content, imageId } = validatedFields.data
+
+  try {
+    const response = await axiosFrontendInstance.patch(
+      `/api/articles/editArticle?id=${articleId}`,
+      {
+        title,
+        perex,
+        content,
+        imageId,
+      }
+    )
+
+    console.log('Article update response:', response)
+    if (response.status === 200) {
+      toast.success('Article updated successfully')
+      return {
+        message: 'Article updated successfully',
+        success: true,
+        title,
+        perex,
+        content,
+        imageId,
+      }
+    }
+
+    toast.error('Failed to update article')
+    return {
+      message: 'Failed to update article',
+      success: false,
+    }
+  } catch (error) {
+    console.error('Article update error:', error)
+    return {
+      message: 'Failed to update article',
     }
   }
 }
@@ -151,6 +216,7 @@ export const articlesService = {
   getArticle,
   deleteArticle,
   createArticle,
+  updateArticle,
   articleUploadImage,
   articleDeleteImage,
 }
