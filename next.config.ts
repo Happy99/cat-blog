@@ -2,6 +2,13 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  redirects: async () => [
+    {
+      source: '/',
+      destination: '/articles',
+      permanent: true,
+    },
+  ],
   images: {
     domains: ['cat-blog-red.vercel.app', 'fullstack.exercise.applifting.cz', 'localhost'],
     remotePatterns: [
@@ -13,7 +20,7 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'fullstack.exercise.applifting.cz',
-        pathname: '/api/images/getImage**',
+        pathname: '/images/**',
       },
       {
         protocol: 'http',
