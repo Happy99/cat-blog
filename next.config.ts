@@ -15,17 +15,17 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'cat-blog-red.vercel.app',
-        pathname: '/api/images/getImage**',
+        pathname: '/api/images/**',
       },
       {
         protocol: 'https',
         hostname: '**.exercise.applifting.cz',
-        // pathname: '/images/**',
+        pathname: '/images/**',
       },
       {
         protocol: 'http',
         hostname: 'localhost',
-        pathname: '/api/images/getImage**',
+        pathname: '/api/images/**',
       },
     ],
   },
