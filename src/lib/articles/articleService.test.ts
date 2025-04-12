@@ -1,81 +1,98 @@
 import mockAxios from 'jest-mock-axios'
 import { articlesService } from './articleService'
-import { IArticleDetails } from './articles.interfaces'
+import { IArticle } from './articles.interfaces'
 
-// Mock the axiosBackendInstance
+// Mock the axiosFrontendInstance
 jest.mock('@/lib/axiosInstance', () => ({
-  axiosBackendInstance: mockAxios,
+  axiosFrontendInstance: mockAxios,
 }))
 
 // Test fixtures
-const mockArticleFixture: IArticleDetails = {
-  articleId: 'db9532ea-b36c-44e0-91db-3d1a40249ad5',
-  title: 'What Is the Difference Between Natural and Organic Cat Food?',
-  perex:
-    "If you prefer your own diet to be natural or organic, you're probably considering feeding your cat a natural or organic cat food, too. What's the difference between the two, though, and how do you decide which is right for your cat? Find out here.",
-  content: '#Lorem ipsum dolor sit amet,\n consectetur adipiscing elit.',
-  imageId: '523e4567-e89b-12d3-a456-426614174000',
-  author: 'Petr Stastny',
-  createdAt: '2025-04-03T17:02:55.250772',
-  lastUpdatedAt: '2025-04-06T18:12:16.933628',
-  comments: [],
-}
+const mockArticlesFixture: IArticle[] = [
+  {
+    articleId: 'test-id-1',
+    title: 'Test Title 1',
+    perex: 'Test perex 1',
+    imageId: 'test-image-id-1',
+    author: 'Test Author 1',
+    createdAt: '2024-01-01T00:00:00.000Z',
+    lastUpdatedAt: '2024-01-01T00:00:00.000Z',
+  },
+  {
+    articleId: 'test-id-2',
+    title: 'Test Title 2',
+    perex: 'Test perex 2',
+    imageId: 'test-image-id-2',
+    author: 'Test Author 2',
+    createdAt: '2024-01-02T00:00:00.000Z',
+    lastUpdatedAt: '2024-01-02T00:00:00.000Z',
+  },
+]
 
 describe('articlesService', () => {
   beforeEach(() => {
     mockAxios.reset()
   })
 
-  describe('getArticle', () => {
-    const articleId = mockArticleFixture.articleId
-
-    describe('when API call is successful', () => {
-      beforeEach(() => {
-        mockAxios.get.mockResolvedValueOnce({ data: mockArticleFixture })
-      })
-
-      it('should make correct API call', async () => {
-        // Arrange
-        const expectedUrl = `/articles/${articleId}`
-
-        // Act
-        await articlesService.getArticle(articleId)
-
-        // Assert
-        expect(mockAxios.get).toHaveBeenCalledWith(expectedUrl)
-        expect(mockAxios.get).toHaveBeenCalledTimes(1)
-      })
-
-      it('should return article details', async () => {
-        // Arrange
-        const expectedArticle = mockArticleFixture
-
-        // Act
-        const result = await articlesService.getArticle(articleId)
-
-        // Assert
-        expect(result).toEqual(expectedArticle)
-      })
+  it('should make correct API call when getting articles', async () => {
+    // Arrange
+    const expectedUrl = '/api/articles/getArticles'
+    mockAxios.get.mockResolvedValueOnce({
+      data: {
+        items: mockArticlesFixture,
+        pagination: {
+          offset: 0,
+          limit: 10,
+          total: 2,
+        },
+      },
     })
 
-    describe('when API call fails', () => {
-      const errorMessage = 'Article not found'
+    // Act
+    await articlesService.getArticles()
 
-      beforeEach(() => {
-        mockAxios.get.mockRejectedValueOnce(new Error(errorMessage))
-      })
+    // Assert
+    expect(mockAxios.get).toHaveBeenCalledWith(expectedUrl)
+    expect(mockAxios.get).toHaveBeenCalledTimes(1)
+  })
 
-      it('should throw an error', async () => {
-        // Arrange
-        const invalidId = 'invalid-id'
-
-        // Act & Assert
-        await expect(articlesService.getArticle(invalidId)).rejects.toThrow(errorMessage)
-
-        // Assert API call
-        expect(mockAxios.get).toHaveBeenCalledWith(`/articles/${invalidId}`)
-        expect(mockAxios.get).toHaveBeenCalledTimes(1)
-      })
+  it('should return articles with correct types', async () => {
+    // Arrange
+    mockAxios.get.mockResolvedValueOnce({
+      data: {
+        items: mockArticlesFixture,
+        pagination: {
+          offset: 0,
+          limit: 10,
+          total: 2,
+        },
+      },
     })
+
+    // Act
+    const result = await articlesService.getArticles()
+
+    // Assert
+    expect(Array.isArray(result)).toBe(true)
+    result.forEach(article => {
+      expect(typeof article.articleId).toBe('string')
+      expect(typeof article.title).toBe('string')
+      expect(typeof article.perex).toBe('string')
+      expect(typeof article.imageId).toBe('string')
+      expect(typeof article.author).toBe('string')
+      expect(typeof article.createdAt).toBe('string')
+      expect(typeof article.lastUpdatedAt).toBe('string')
+    })
+  })
+
+  it('should throw an error when API call fails', async () => {
+    // Arrange
+    const errorMessage = 'Failed to fetch articles'
+    mockAxios.get.mockRejectedValueOnce(new Error(errorMessage))
+
+    // Act & Assert
+    await expect(articlesService.getArticles()).rejects.toThrow(errorMessage)
+    expect(mockAxios.get).toHaveBeenCalledWith('/api/articles/getArticles')
+    expect(mockAxios.get).toHaveBeenCalledTimes(1)
   })
 })
