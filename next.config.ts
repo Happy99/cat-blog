@@ -1,7 +1,6 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactStrictMode: true,
   redirects: async () => [
     {
@@ -10,6 +9,16 @@ const nextConfig: NextConfig = {
       permanent: true,
     },
   ],
+  images: {
+    domains: ['cat-blog-red.vercel.app', 'localhost'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cat-blog-red.vercel.app',
+        pathname: '/api/images/getImage**',
+      },
+    ],
+  },
 }
 
 export default nextConfig
