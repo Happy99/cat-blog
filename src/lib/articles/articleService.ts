@@ -4,7 +4,7 @@ import { ApiResponse } from '@/pages/api/api.interfaces'
 import { toast } from 'react-toastify'
 import { NewArticleFormSchema, NewArticleFormState } from '../definitions'
 
-const getArticles = async (limit?: number): Promise<IArticle[]> => {
+const getArticlesFrontend = async (limit?: number): Promise<IArticle[]> => {
   const response: ApiResponse<IAllArticles> = await axiosBackendInstance.get('/articles', {
     params: { limit },
   })
@@ -16,7 +16,18 @@ const getArticles = async (limit?: number): Promise<IArticle[]> => {
   )
 }
 
-const getArticle = async (articleId: string): Promise<IArticleDetails> => {
+const getArticles = async (): Promise<IArticle[]> => {
+  const response: ApiResponse<IAllArticles> = await axiosFrontendInstance.get(
+    '/api/articles/getArticles'
+  )
+  const { items: articles } = response.data
+
+  sortArticles(articles)
+  authorArticles(articles)
+  return articles
+}
+
+const getArticleFrontend = async (articleId: string): Promise<IArticleDetails> => {
   const response: ApiResponse<IArticleDetails> = await axiosBackendInstance.get(
     `/articles/${articleId}`
   )
@@ -25,12 +36,18 @@ const getArticle = async (articleId: string): Promise<IArticleDetails> => {
   return response.data
 }
 
-const getArticleBackend = async (articleId: string): Promise<IArticleDetails> => {
-  console.log('___ CLIENT: getArticleBackend START')
-  const response: ApiResponse<IArticleDetails> = await axiosBackendInstance.get(
+const getArticle = async (articleId: string): Promise<IArticleDetails> => {
+  const response: ApiResponse<IArticleDetails> = await axiosFrontendInstance.get(
     `/api/articles/getArticle?id=${articleId}`
   )
-  console.log('___ CLIENT: getArticleBackend - response: ', response)
+
+  if (response.status === 200) {
+    const article = response.data
+    article.author = 'Petr Stastny'
+
+    return article
+  }
+
   return response.data
 }
 
@@ -253,9 +270,22 @@ const articleDeleteImage = async (
   }
 }
 
+const sortArticles = (articles: IArticle[]): IArticle[] => {
+  return articles.sort(
+    (a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime()
+  )
+}
+
+const authorArticles = (articles: IArticle[]): IArticle[] => {
+  articles.forEach(async article => (article.author = 'Petr Stastny'))
+  return articles
+}
+
 export const articlesService = {
   getArticles,
+  getArticlesFrontend,
   getArticle,
+  getArticleFrontend,
   deleteArticle,
   createArticle,
   updateArticle,

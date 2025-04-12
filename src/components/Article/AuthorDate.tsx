@@ -1,4 +1,12 @@
-const AuthorDate = ({ date, className }: { date: string; className?: string }) => {
+const AuthorDate = ({
+  date,
+  author,
+  className,
+}: {
+  date: string
+  author: string
+  className?: string
+}) => {
   function formatDate(dateStr: string) {
     const date = new Date(dateStr)
     const month = String(date.getMonth() + 1).padStart(2, '0') // Months are zero-indexed
@@ -12,7 +20,7 @@ const AuthorDate = ({ date, className }: { date: string; className?: string }) =
     <div
       className={`d-flex flex-column flex-lg-row gap-0 gap-lg-2 align-items-lg-center text-secondary ${className}`}
     >
-      <address className="mb-0">Petr Stastny</address>
+      <address className="mb-0">{author}</address>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"

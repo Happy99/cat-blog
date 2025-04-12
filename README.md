@@ -54,7 +54,7 @@ Interesting POC to me this blog.
 
 ### Missing:
 
-- fetch image for articles
+- implement HOC to secure admin paths
 - markdown for articles
 - admin - article table - fancy component (I would bet on ShadCN)
 - comments
