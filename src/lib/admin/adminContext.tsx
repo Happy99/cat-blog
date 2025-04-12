@@ -20,16 +20,13 @@ export const AdminProvider = ({
   const [articles, setArticles] = useState(initialArticles)
 
   const deleteArticle = async (articleId: string) => {
-    const imageResponse = await articlesService.articleDeleteImage(articleId)
+    const imageResponse = await articlesService.articleDeleteImage('', articleId)
     console.log('_*******__ adminContext: deleteArticle imageResponse: ', imageResponse)
 
     const articleResponse = await articlesService.deleteArticle(articleId)
     console.log('_*******__ adminContext: deleteArticle response: ', articleResponse)
 
-    if (
-      articleResponse === 'Article deleted successfully' &&
-      imageResponse === 'Image deleted successfully'
-    ) {
+    if (articleResponse.success && imageResponse.success) {
       setArticles(prev => prev.filter(article => article.articleId !== articleId))
     }
   }

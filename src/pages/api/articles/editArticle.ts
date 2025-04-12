@@ -15,12 +15,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return handleApiError(401, ['general', 'unauthorized'], res)
   }
 
-  const { title, perex, content } = req.body
+  const { title, perex, content, imageId } = req.body
 
   try {
     const response = await axiosBackendInstance.patch(
       `/articles/${articleId}`,
-      { title, perex, content },
+      { title, perex, content, imageId },
       {
         headers: {
           Authorization: `Bearer ${sessionData.accessToken}`,
@@ -29,7 +29,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
     )
 
-    handleApiError(response.status, ['blog', 'editArticle'], res)
+    console.log('___ SERVER: editArticle - response.data', response.data)
+    console.log('___ SERVER: editArticle - response.status', response.status)
+
+    handleApiError(response.status, ['blog', 'patchArticle'], res)
   } catch (error) {
     console.error('Error updating article:', error)
     res.status(500).json({ error: 'Internal server error' })

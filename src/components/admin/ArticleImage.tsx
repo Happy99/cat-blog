@@ -1,7 +1,7 @@
 import { articlesService } from '@/lib/articles/articleService'
 import { NewArticleFormState } from '@/lib/definitions'
 import Image from 'next/image'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 
 interface ArticleImageProps {
   readonly articleImageId: string
@@ -19,6 +19,7 @@ export default function ArticleImage({
   const [imagePreview, setImagePreview] = useState<string>(
     articleImageId ? `/api/images/getImage?id=${articleImageId}` : ''
   )
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (imageId) {
@@ -27,7 +28,6 @@ export default function ArticleImage({
   }, [imageId])
 
   useEffect(() => {
-    // Cleanup to avoid memory leaks
     return () => {
       if (imagePreview.startsWith('blob:')) {
         URL.revokeObjectURL(imagePreview)
@@ -35,24 +35,81 @@ export default function ArticleImage({
     }
   }, [imagePreview])
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSubmitDisabled(true)
+  useEffect(() => {
+    console.log('___ CLIENT: useEffect - image: ', image)
+  }, [image])
 
-    const file = e.target.files?.[0]
-    if (file) setImage(file)
+  const triggerFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+    }
   }
 
-  const handleUploadImage = async () => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+    const file = e.target.files?.[0]
+    if (!file) {
+      // File selection cancelled
+      setSubmitDisabled(false)
+      return
+    }
+
+    // If replacing an existing image, delete it first
+    if (imageId) {
+      console.log('___ CLIENT: handleImageChange - imageId: ', imageId)
+      console.log('___ CLIENT: handleImageChange DELETE IMAGE')
+      await handleDeleteImage(true)
+      console.log('___ CLIENT: handleImageChange UPLOAD IMAGE')
+      //   await handleUploadImage()
+    }
+
+    setImage(file)
+    setSubmitDisabled(true)
+    console.log('___ CLIENT: handleImageChange - file: ', file)
+
+    // Set preview for new image
+    const previewUrl = URL.createObjectURL(file)
+    setImagePreview(previewUrl)
+  }
+
+  const handleUploadImage = async (): Promise<void> => {
+    console.log('___ CLIENT: handleUploadImage STARTED')
     if (!image) return
 
     const formData = new FormData()
+    console.log('___ CLIENT: handleUploadImage - image: ', image)
     formData.append('image', image)
 
-    await articlesService.articleUploadImage(formData, setImageId, setImage, setSubmitDisabled)
+    console.log('___ CLIENT: handleUploadImage - formData: ', formData)
+
+    const { success, imageId } = await articlesService.articleUploadImage(formData)
+    if (success) {
+      console.log('___ CLIENT: handleUploadImage - imageId: ', imageId)
+      setImageId(imageId)
+      setImage(null)
+      setSubmitDisabled(false)
+    }
+  }
+
+  const handleDeleteImage = async (skipConfirm = false): Promise<void> => {
+    if (!skipConfirm) {
+      const confirmed = confirm('Are you sure you want to delete this image?')
+      if (!confirmed) return
+    }
+
+    const { success } = await articlesService.articleDeleteImage(imageId, '')
+    if (success) {
+      setImageId('')
+      setImage(null)
+      setImagePreview('')
+      setSubmitDisabled(false)
+
+      if (state?.errors?.imageId) {
+        state.errors.imageId = []
+      }
+    }
   }
 
   return (
-    // petstast: this component looks a bit different than in figma, UX is better this way for me, so I "dovolit si" do it differently :D
     <div className="d-flex flex-column gap-2 mb-3">
       <label htmlFor="image" className="form-label">
         * Featured Image
@@ -64,6 +121,7 @@ export default function ArticleImage({
         id="image"
         accept="image/*"
         onChange={handleImageChange}
+        ref={fileInputRef}
         hidden={!!imagePreview}
       />
 
@@ -82,11 +140,15 @@ export default function ArticleImage({
             className="img-thumbnail"
           />
           <div className="d-flex flex-row align-items-center gap-2">
-            <button type="button" className="btn text-primary p-0">
+            <button type="button" className="btn text-primary p-0" onClick={triggerFileInput}>
               Upload new
             </button>
             <span className="text-muted">|</span>
-            <button type="button" className="btn text-danger p-0">
+            <button
+              type="button"
+              className="btn text-danger p-0"
+              onClick={() => handleDeleteImage()}
+            >
               Delete
             </button>
           </div>

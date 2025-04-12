@@ -34,15 +34,15 @@ const getArticleBackend = async (articleId: string): Promise<IArticleDetails> =>
   return response.data
 }
 
-const deleteArticle = async (articleId: string): Promise<string> => {
+const deleteArticle = async (articleId: string): Promise<{ message: string; success: boolean }> => {
   const response = await axiosFrontendInstance.delete(`/api/articles/deleteArticle?id=${articleId}`)
   if (response.status === 204) {
     toast.success('Article deleted successfully')
-    return 'Article deleted successfully'
+    return { message: 'Article deleted successfully', success: true }
   }
 
   toast.error('Failed to delete article')
-  return 'Failed to delete article'
+  return { message: 'Failed to delete article', success: false }
 }
 
 const createArticle = async (
@@ -122,19 +122,31 @@ const updateArticle = async (
 
   const { title, perex, content, imageId } = validatedFields.data
 
+  console.log('___ CLIENT: updateArticle - imageId: ', imageId)
+  console.log('___ CLIENT: updateArticle - type of imageId: ', typeof imageId)
+  console.log(
+    '___ CLIENT: updateArticle - all objects: ',
+    articleId,
+    title,
+    perex,
+    content,
+    imageId
+  )
+
   try {
     const response = await axiosFrontendInstance.patch(
       `/api/articles/editArticle?id=${articleId}`,
       {
+        articleId,
         title,
         perex,
-        content,
         imageId,
+        content,
       }
     )
 
     console.log('Article update response:', response)
-    if (response.status === 200) {
+    if (response.status === 200 && response.data !== 'An unknown error occurred') {
       toast.success('Article updated successfully')
       return {
         message: 'Article updated successfully',
@@ -160,11 +172,8 @@ const updateArticle = async (
 }
 
 const articleUploadImage = async (
-  formData: FormData,
-  setImageId: (imageId: string) => void,
-  setImage: (image: File | null) => void,
-  setSubmitDisabled: (submitDisabled: boolean) => void
-): Promise<string> => {
+  formData: FormData
+): Promise<{ message: string; success: boolean; imageId: string }> => {
   try {
     const response = await axiosFrontendInstance.post('/api/images/upload', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
@@ -173,41 +182,44 @@ const articleUploadImage = async (
     const uploadedImageId = response.data.length > 0 ? response.data[0].imageId : null
 
     if (uploadedImageId) {
-      setImageId(uploadedImageId)
-      setImage(null)
-      setSubmitDisabled(false)
       toast.success('Image uploaded successfully')
-      return 'Image uploaded successfully'
+      return { message: 'Image uploaded successfully', success: true, imageId: uploadedImageId }
     }
 
     toast.error('No imageId returned from server')
-    return 'No imageId returned from server'
+    return { message: 'No imageId returned from server', success: false, imageId: '' }
   } catch (error) {
     console.error('Upload error:', error)
-    return 'Failed to upload image'
+    return { message: 'Failed to upload image', success: false, imageId: '' }
   }
 }
 
 // problem je, ze getArticle vrati neco jineho na clientu - parsovane response.data do konzole v chromu, ale na serveru to vraci klasicky objekt
-const articleDeleteImage = async (articleId: string): Promise<string> => {
+const articleDeleteImage = async (
+  imageId?: string,
+  articleId?: string
+): Promise<{ message: string; success: boolean }> => {
   try {
-    const article = await getArticleBackend(articleId)
-    console.log('___ CLIENT: articleDeleteImage - article: ', article)
-    const imageId = article.imageId
-    console.log('___ CLIENT: articleDeleteImage - imageId: ', imageId)
-    const response = await axiosFrontendInstance.delete(`/api/images/deleteImage?id=${imageId}`)
-    console.log('___ CLIENT: articleDeleteImage - response: ', response)
+    let imageIdtoDelete = imageId ?? ''
+    if (articleId) {
+      const article = await getArticleBackend(articleId)
+      imageIdtoDelete = article.imageId
+    }
+
+    const response = await axiosFrontendInstance.delete(
+      `/api/images/deleteImage?id=${imageIdtoDelete}`
+    )
 
     if (response.status === 204) {
       toast.success('Image deleted successfully')
-      return 'Image deleted successfully'
+      return { message: 'Image deleted successfully', success: true }
     }
 
     toast.error('Failed to delete image')
-    return 'Failed to delete image'
+    return { message: 'Failed to delete image', success: false }
   } catch (error) {
     console.error('Delete image error:', error)
-    return 'Failed to delete image'
+    return { message: 'Failed to delete image', success: false }
   }
 }
 
