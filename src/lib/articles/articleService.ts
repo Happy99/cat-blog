@@ -49,28 +49,43 @@ const createArticle = async (
   state: NewArticleFormState | undefined,
   formData: FormData
 ): Promise<NewArticleFormState> => {
+  const title = formData.get('title') as string
+  const perex = formData.get('perex') as string
+  const content = formData.get('content') as string
+  const imageId = formData.get('imageId') as string
+
   const validatedFields = NewArticleFormSchema.safeParse({
-    title: formData.get('title'),
-    perex: formData.get('perex'),
-    content: formData.get('content'),
-    imageId: formData.get('imageId'),
+    title,
+    perex,
+    content,
+    imageId,
   })
 
-  // form validation before ftchning data
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-    }
-  }
-
-  const { title, perex, content, imageId } = validatedFields.data
-
-  try {
-    const response = await axiosFrontendInstance.post('/api/articles/newArticle', {
+      message: 'Validation failed',
+      success: false,
       title,
       perex,
       content,
       imageId,
+    }
+  }
+
+  const {
+    title: validatedTitle,
+    perex: validatedPerex,
+    content: validatedContent,
+    imageId: validatedImageId,
+  } = validatedFields.data
+
+  try {
+    const response = await axiosFrontendInstance.post('/api/articles/newArticle', {
+      title: validatedTitle,
+      perex: validatedPerex,
+      content: validatedContent,
+      imageId: validatedImageId,
     })
 
     console.log('Article creation response:', response)
@@ -79,10 +94,10 @@ const createArticle = async (
       return {
         message: 'Article created successfully',
         success: true,
-        title,
-        perex,
-        content,
-        imageId,
+        title: validatedTitle,
+        perex: validatedPerex,
+        content: validatedContent,
+        imageId: validatedImageId,
       }
     }
 
@@ -105,11 +120,16 @@ const updateArticle = async (
   formData: FormData
 ): Promise<NewArticleFormState> => {
   const articleId = formData.get('articleId') as string
+  const title = formData.get('title') as string
+  const perex = formData.get('perex') as string
+  const content = formData.get('content') as string
+  const imageId = formData.get('imageId') as string
+
   const validatedFields = NewArticleFormSchema.safeParse({
-    title: formData.get('title'),
-    perex: formData.get('perex'),
-    content: formData.get('content'),
-    imageId: formData.get('imageId'),
+    title,
+    perex,
+    content,
+    imageId,
   })
 
   if (!validatedFields.success) {
@@ -117,20 +137,29 @@ const updateArticle = async (
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Validation failed',
       success: false,
+      title,
+      perex,
+      content,
+      imageId,
     }
   }
 
-  const { title, perex, content, imageId } = validatedFields.data
+  const {
+    title: validatedTitle,
+    perex: validatedPerex,
+    content: validatedContent,
+    imageId: validatedImageId,
+  } = validatedFields.data
 
-  console.log('___ CLIENT: updateArticle - imageId: ', imageId)
-  console.log('___ CLIENT: updateArticle - type of imageId: ', typeof imageId)
+  console.log('___ CLIENT: updateArticle - imageId: ', validatedImageId)
+  console.log('___ CLIENT: updateArticle - type of imageId: ', typeof validatedImageId)
   console.log(
     '___ CLIENT: updateArticle - all objects: ',
     articleId,
-    title,
-    perex,
-    content,
-    imageId
+    validatedTitle,
+    validatedPerex,
+    validatedContent,
+    validatedImageId
   )
 
   try {
@@ -138,10 +167,10 @@ const updateArticle = async (
       `/api/articles/editArticle?id=${articleId}`,
       {
         articleId,
-        title,
-        perex,
-        imageId,
-        content,
+        title: validatedTitle,
+        perex: validatedPerex,
+        content: validatedContent,
+        imageId: validatedImageId,
       }
     )
 
@@ -151,10 +180,10 @@ const updateArticle = async (
       return {
         message: 'Article updated successfully',
         success: true,
-        title,
-        perex,
-        content,
-        imageId,
+        title: validatedTitle,
+        perex: validatedPerex,
+        content: validatedContent,
+        imageId: validatedImageId,
       }
     }
 
@@ -167,6 +196,7 @@ const updateArticle = async (
     console.error('Article update error:', error)
     return {
       message: 'Failed to update article',
+      success: false,
     }
   }
 }

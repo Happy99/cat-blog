@@ -54,11 +54,9 @@ Interesting POC to me this blog.
 
 ### Missing:
 
-- edit article
 - fetch image for articles
 - markdown for articles
 - admin - article table - fancy component (I would bet on ShadCN)
-- publish button for article - I'm using simple adminContext, could store article there before POST (publish)
 - comments
 - paginations
 - optionally implement article ordering: I would simple use drag and drop with ShadCN and update article.lastUpdateDate
