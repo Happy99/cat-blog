@@ -1,12 +1,35 @@
 COMMIT_MSG=$(cat "$1")
+
 if echo "$COMMIT_MSG" | grep -q "RELEASE"; then
   echo "Detected 'RELEASE' in commit message: $COMMIT_MSG"
+
+  # Ensure we're on master
+  CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+  if [ "$CURRENT_BRANCH" != "master" ]; then
+    echo "Error: Must be on master branch for RELEASE commit"
+    exit 1
+  fi
+
   echo "Building project..."
-  npm run build || { echo "Build failed, aborting push to production"; exit 1; }
-  echo "Build succeeded, pushing to production branch..."
-  git checkout production || git checkout -b production
-  git merge --ff-only master || { echo "Merge conflict detected, aborting"; exit 1; }
-  git push origin production
-  git checkout master
-  echo "Pushed to production and switched back to master"
+  npm run build || { echo "Build failed, aborting"; exit 1; }
+
+  echo "Build succeeded, merging master into production..."
+  # Check if production branch exists
+  if ! git show-ref --quiet refs/heads/production; then
+    echo "Creating production branch..."
+    git checkout -b production || { echo "Failed to create production branch"; exit 1; }
+  else
+    git checkout production || { echo "Failed to checkout production"; exit 1; }
+  fi
+
+  # Merge master into production
+  git merge --ff-only master || { echo "Merge conflict or non-fast-forward, aborting"; git checkout master; exit 1; }
+
+  echo "Pushing to production..."
+  git push origin production || { echo "Failed to push to production"; git checkout master; exit 1; }
+
+  echo "Switching back to master..."
+  git checkout master || { echo "Failed to switch back to master"; exit 1; }
+
+  echo "Successfully merged master into production and pushed"
 fi

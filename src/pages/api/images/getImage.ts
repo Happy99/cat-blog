@@ -17,8 +17,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       responseType: 'arraybuffer', // Get raw image data
     })
 
-    console.log('___ server get image response: ', response)
-
     res.setHeader('Content-Type', response.headers['content-type'] || 'image/jpeg')
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
 
