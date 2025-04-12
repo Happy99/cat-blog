@@ -1,4 +1,3 @@
-import { sessionService } from '@/lib/auth/sessionService'
 import { axiosBackendInstance } from '@/lib/axiosInstance'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -9,15 +8,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const imageId = req.query.id as string
   console.log('_****__ server get image: imageId: ', imageId)
-  const sessionData = await sessionService.verifySession(req)
-  if (!sessionData) {
-    return res.status(401).json({ error: 'Unauthorized' })
-  }
 
   try {
     const response = await axiosBackendInstance.get(`/images/${imageId}`, {
       headers: {
-        Authorization: `Bearer ${sessionData.accessToken}`,
         'X-API-KEY': process.env.APPLIFTING_API_KEY,
       },
       responseType: 'arraybuffer', // Get raw image data
