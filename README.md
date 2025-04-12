@@ -42,6 +42,7 @@ Interesting POC to me this blog.
 - The longer I code inside Next.js the better the feeling is, I see more code smells and more work to do ...
 - different approaches between deleting images and deleting articles - wanted to test the way with Pages router and one way with query in URL - to me it's good POC for both concepts
 - With more time I would go again trough whole authentication, I don't really like how I handle session there, how I handle 401 etc. Maybe I would try to create adminContext conext for whole admin dashboard so than it would not be needed to handle in each page like right now. Or implementin high-order component could also help and it will be just in one place.
+- pretty interesting thing (https://github.com/Happy99/cat-blog/commit/f025b77fee11de3a74b40fdee8403a2d20546bc3). Did not know that, would be nice to know more about this.
 
 ### Know bugs:
 
@@ -52,6 +53,7 @@ Interesting POC to me this blog.
 - when creating new article, image is added, than removed trough file explorer upload image stays and image can be uploaded
 - removing article without image cause error because of imageId is null - should be handeled and returned that just article was deleted if so
 - deleting article with imageId that does not exist in db - images cause error - it needs to be handled so just article will be deleted
+- need to revalidate paths to article detail
 - error handling at all - I tried do it properly in Admin Dashobard but I bet I forgot something somwhere + in need of refactoring, refactoring ...
 
 ### Missing:

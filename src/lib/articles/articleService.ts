@@ -10,10 +10,9 @@ const getArticlesFrontend = async (limit?: number): Promise<IArticle[]> => {
   })
   const { items: articles } = response.data
 
-  // sort by lastUpdatedAt descending
-  return articles.sort(
-    (a, b) => new Date(b.lastUpdatedAt).getTime() - new Date(a.lastUpdatedAt).getTime()
-  )
+  sortArticles(articles)
+  authorArticles(articles)
+  return articles
 }
 
 const getArticles = async (): Promise<IArticle[]> => {
@@ -32,8 +31,14 @@ const getArticleFrontend = async (articleId: string): Promise<IArticleDetails> =
     `/articles/${articleId}`
   )
 
-  console.log('___ SERVER: getArticle - response: ', response.data)
-  return response.data
+  const article = response.data
+  if (response.status === 200) {
+    article.author = 'Petr Stastny'
+
+    return article
+  }
+
+  return article
 }
 
 const getArticle = async (articleId: string): Promise<IArticleDetails> => {
