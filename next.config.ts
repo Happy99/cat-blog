@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'fullstack.exercise.applifting.cz',
-        pathname: '/api/images/**',
+        pathname: '/images/**',
       },
       {
         protocol: 'http',
