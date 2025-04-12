@@ -9,7 +9,7 @@ interface IArticlesProps {
 }
 
 export const getStaticProps: GetStaticProps<IArticlesProps> = async () => {
-  const articles = await articlesService.getArticles()
+  const articles = await articlesService.getArticlesFrontend()
 
   return {
     props: { articles },

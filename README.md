@@ -51,6 +51,7 @@ Interesting POC to me this blog.
 - create and edit article are accessible, post cannot be done - think about high order component - middleware is not recommended by Axios
 - when creating new article, image is added, than removed trough file explorer upload image stays and image can be uploaded
 - removing article without image cause error because of imageId is null - should be handeled and returned that just article was deleted if so
+- deleting article with imageId that does not exist in db - images cause error - it needs to be handled so just article will be deleted
 - error handling at all - I tried do it properly in Admin Dashobard but I bet I forgot something somwhere + in need of refactoring, refactoring ...
 
 ### Missing:
@@ -70,3 +71,7 @@ Interesting POC to me this blog.
 - ⁠unit test - fetchne clanky
 - ⁠createArticle - pokud pridam img, nepujde odeslat form dokud nedam upload img (next step - udelat v jednom - takhle aspon vidim preview)
 - ⁠editArticle - nepujde odeslat, pokud se zadna value nezmeni (jeden state - false a na onChange true a pred odeslanim checknout - odeslat muze byt disabled a pod btn text, ze musi byt prvne zmena
+
+http://localhost:3000/admin/articles
+http://localhost:3000/admin/articles/new
+http://localhost:3000/admin/articles/edit/c2193e5b-09ad-4b15-8639-c0a623e66b11

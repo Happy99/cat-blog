@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const articles = await articlesService.getArticles()
+  const articles = await articlesService.getArticlesFrontend()
   const paths = articles.map((article: IArticle) => ({
     params: { id: String(article.articleId) },
   }))
@@ -30,10 +30,10 @@ export const getStaticProps: GetStaticProps<Props> = async context => {
   }
 
   const articleId = params.id as string
-  const article = await articlesService.getArticle(articleId)
+  const article = await articlesService.getArticleFrontend(articleId)
 
   // I assume db will be small, so fetching all articles and then slicing, not best solution - could be refactored if db grows
-  const allArticles = await articlesService.getArticles()
+  const allArticles = await articlesService.getArticlesFrontend()
   const relatedArticles = allArticles.filter(a => a.articleId !== articleId).slice(0, 4) // Limit to 4 artcles
 
   return {

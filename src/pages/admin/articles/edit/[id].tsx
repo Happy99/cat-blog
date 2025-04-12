@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async context => {
   }
 
   const articleId = params.id as string
-  const article = await articlesService.getArticle(articleId)
+  const article = await articlesService.getArticleFrontend(articleId)
 
   if (!article) {
     return { notFound: true }
