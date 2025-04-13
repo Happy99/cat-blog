@@ -1,6 +1,7 @@
 import { useAdmin } from '@/lib/admin/adminContext'
 import ArticlesTableActions from './ArticlesTableActions'
-export default function ArticlesTable() {
+
+const ArticlesTable = () => {
   const { articles } = useAdmin()
 
   return articles.length > 0 ? (
@@ -30,3 +31,5 @@ export default function ArticlesTable() {
     <p>No articles found.</p>
   )
 }
+
+export default ArticlesTable

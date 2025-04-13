@@ -44,7 +44,7 @@ export const getStaticProps: GetStaticProps<Props> = async context => {
   }
 }
 
-export default function ArticleDetailPage({ article, relatedArticles }: Props) {
+const ArticleDetailPage = ({ article, relatedArticles }: Props) => {
   return (
     <main className="row">
       <ArticleDetail article={article} />
@@ -52,3 +52,5 @@ export default function ArticleDetailPage({ article, relatedArticles }: Props) {
     </main>
   )
 }
+
+export default ArticleDetailPage

@@ -108,6 +108,8 @@ Also once I moved articles to backend, I found out that I cannot fetch data trou
 And yeah… refactoring, refactoring. When I was really struggling, I just dumped everything into one place to make it work. Now? It hurts. A lot. Same with file and folder naming...
 Sorry for that, trust me, this is not something I would really do :D. ("the goal here is not just to see if you can do an app, but how you do it. So please write it as if it were a big production app, that includes code structure, validations, usage of git, documentation, tests, linting, etc." - here I failed for sure.)
 
+[refactored: 13/04/25]: Sometimes I use anonymous functions, sometimes classic old-fashioned ones
+
 ### Know bugs:
 
 - when session is cleared in browser or it expires, context does not clear username -> navbar contains admin thingies

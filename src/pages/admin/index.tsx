@@ -1,5 +1,5 @@
 import PageHeading from '@/components/PageHeading/PageHeading'
 
-export default function AdminDashboardPage() {
-  return <PageHeading title="Admin dashboard" />
-}
+const AdminDashboardPage = () => <PageHeading title="Admin dashboard" />
+
+export default AdminDashboardPage

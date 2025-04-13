@@ -11,7 +11,7 @@ interface AdminProps {
   readonly articles: IArticle[]
 }
 
-export default function ArticlesListPage({ articles }: AdminProps) {
+const ArticlesListPage = ({ articles }: AdminProps) => {
   return (
     <AdminProvider initialArticles={articles}>
       <div className="d-flex flex-column flex-lg-row align-items-center gap-4 mb-4">
@@ -24,6 +24,8 @@ export default function ArticlesListPage({ articles }: AdminProps) {
     </AdminProvider>
   )
 }
+
+export default ArticlesListPage
 
 export const getServerSideProps: GetServerSideProps<AdminProps> = async context => {
   const { req } = context

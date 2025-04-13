@@ -9,11 +9,7 @@ interface ArticleImageProps {
   readonly setSubmitDisabled: Dispatch<SetStateAction<boolean>>
 }
 
-export default function ArticleImage({
-  articleImageId,
-  state,
-  setSubmitDisabled,
-}: ArticleImageProps) {
+const ArticleImage = ({ articleImageId, state, setSubmitDisabled }: ArticleImageProps) => {
   const [image, setImage] = useState<File | null>(null)
   const [imageId, setImageId] = useState<string>(articleImageId)
   const [imagePreview, setImagePreview] = useState<string>(
@@ -162,3 +158,5 @@ export default function ArticleImage({
     </div>
   )
 }
+
+export default ArticleImage

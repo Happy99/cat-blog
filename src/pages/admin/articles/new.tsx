@@ -2,9 +2,9 @@ import ArticleForm from '@/components/admin/ArticleForm'
 import { validateFrontendSession } from '@/utils/utils'
 import { GetServerSideProps } from 'next'
 
-export default function NewArticlePage() {
-  return <ArticleForm />
-}
+const NewArticlePage = () => <ArticleForm />
+
+export default NewArticlePage
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const { req } = context

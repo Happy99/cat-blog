@@ -11,7 +11,7 @@ interface ArticleFormProps {
   readonly article?: IArticleDetails
 }
 
-export default function ArticleForm({ article }: ArticleFormProps) {
+const ArticleForm = ({ article }: ArticleFormProps) => {
   const initialFormState: NewArticleFormState = {
     errors: {},
     message: '',
@@ -91,3 +91,5 @@ export default function ArticleForm({ article }: ArticleFormProps) {
     </div>
   )
 }
+
+export default ArticleForm

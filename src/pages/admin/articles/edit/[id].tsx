@@ -8,9 +8,9 @@ interface Props {
   readonly article: IArticleDetails
 }
 
-export default function EditArticlePage({ article }: Props) {
-  return <ArticleForm article={article} />
-}
+const EditArticlePage = ({ article }: Props) => <ArticleForm article={article} />
+
+export default EditArticlePage
 
 export const getServerSideProps: GetServerSideProps<Props> = async context => {
   const { req, params } = context

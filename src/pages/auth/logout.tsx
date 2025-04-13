@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 // petstast: page is not necessary, could be just function handleLogout in NavBar, but I like this to have URL
-export default function LogoutPage() {
+const LogoutPage = () => {
   const router = useRouter()
   const { logout } = useAuth()
 
@@ -53,3 +53,5 @@ export const getServerSideProps: GetServerSideProps = async context => {
     }
   }
 }
+
+export default LogoutPage

@@ -1,7 +1,7 @@
 import { useAdmin } from '@/lib/admin/adminContext'
 import Link from 'next/link'
 
-export default function ArticlesTableActions({ articleId }: { readonly articleId: string }) {
+const ArticlesTableActions = ({ articleId }: { readonly articleId: string }) => {
   const { deleteArticle } = useAdmin()
 
   const handleDelete = async () => {
@@ -21,3 +21,5 @@ export default function ArticlesTableActions({ articleId }: { readonly articleId
     </td>
   )
 }
+
+export default ArticlesTableActions

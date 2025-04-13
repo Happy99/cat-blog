@@ -19,7 +19,7 @@ export const getStaticProps: GetStaticProps<IArticlesProps> = async () => {
   }
 }
 
-export default function ArticlesPage({ articles }: IArticlesProps) {
+const ArticlesPage = ({ articles }: IArticlesProps) => {
   return (
     <>
       <PageHeading title="Recent articles" />
@@ -32,3 +32,5 @@ export default function ArticlesPage({ articles }: IArticlesProps) {
     </>
   )
 }
+
+export default ArticlesPage

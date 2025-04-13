@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   return (
     <Layout>
       <Component {...pageProps} />
@@ -12,3 +12,5 @@ export default function App({ Component, pageProps }: AppProps) {
     </Layout>
   )
 }
+
+export default App
