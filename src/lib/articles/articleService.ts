@@ -8,22 +8,32 @@ const getArticlesFrontend = async (limit?: number): Promise<IArticle[]> => {
   const response: ApiResponse<IAllArticles> = await axiosBackendInstance.get('/articles', {
     params: { limit },
   })
-  const { items: articles } = response.data
 
-  sortArticles(articles)
-  authorArticles(articles)
-  return articles
+  if (response.status === 200) {
+    const { items: articles } = response.data
+
+    sortArticles(articles)
+    authorArticles(articles)
+    return articles
+  }
+
+  return []
 }
 
 const getArticles = async (): Promise<IArticle[]> => {
   const response: ApiResponse<IAllArticles> = await axiosFrontendInstance.get(
     '/api/articles/getArticles'
   )
-  const { items: articles } = response.data
 
-  sortArticles(articles)
-  authorArticles(articles)
-  return articles
+  if (response.status === 200) {
+    const { items: articles } = response.data
+
+    sortArticles(articles)
+    authorArticles(articles)
+    return articles
+  }
+
+  return []
 }
 
 const getArticleFrontend = async (articleId: string): Promise<IArticleDetails> => {
@@ -31,14 +41,24 @@ const getArticleFrontend = async (articleId: string): Promise<IArticleDetails> =
     `/articles/${articleId}`
   )
 
-  const article = response.data
   if (response.status === 200) {
+    const article = response.data
     article.author = 'Petr Stastny'
 
     return article
   }
 
-  return article
+  return {
+    author: '',
+    comments: [],
+    articleId: '',
+    title: '',
+    content: '',
+    perex: '',
+    imageId: '',
+    createdAt: '',
+    lastUpdatedAt: '',
+  }
 }
 
 const getArticle = async (articleId: string): Promise<IArticleDetails> => {
@@ -246,7 +266,6 @@ const articleUploadImage = async (
   }
 }
 
-// problem je, ze getArticle vrati neco jineho na clientu - parsovane response.data do konzole v chromu, ale na serveru to vraci klasicky objekt
 const articleDeleteImage = async (
   imageId?: string,
   articleId?: string
