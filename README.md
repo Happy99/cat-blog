@@ -109,6 +109,7 @@ And yeah… refactoring, refactoring. When I was really struggling, I just dumpe
 Sorry for that, trust me, this is not something I would really do :D. ("the goal here is not just to see if you can do an app, but how you do it. So please write it as if it were a big production app, that includes code structure, validations, usage of git, documentation, tests, linting, etc." - here I failed for sure.)
 
 [refactored: 13/04/25]: Sometimes I use anonymous functions, sometimes classic old-fashioned ones
+[refactored: 13/04/25]: Folder structure got a bit of love, same for file naming.
 
 ### Know bugs:
 
