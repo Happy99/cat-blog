@@ -34,11 +34,6 @@ export const validateFrontendSession = async (
   })
 
   console.log(
-    '_***********************____ SERVER: validateFrontendSession - sessionResponse',
-    sessionResponse
-  )
-
-  console.log(
     '_*****____ SERVER: validateFrontendSession - sessionResponse',
     sessionResponse.status,
     sessionResponse.data

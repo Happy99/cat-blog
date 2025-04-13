@@ -130,7 +130,7 @@ const createArticle = async (
       imageId: validatedImageId,
     })
 
-    console.log('Article creation response:', response)
+    console.log('Article creation response data:', response.data)
     if (response.status === 200) {
       toast.success('Article created successfully')
       return {

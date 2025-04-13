@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })
 
     console.log('___ SERVER: getArticles HANDLER 444')
-    console.log('___ SERVER: getArticles - response: ', reponse)
+    console.log('___ SERVER: getArticles - response data: ', reponse.data)
 
     // revalidatePath('/admin/articles')
     if (reponse.status === 200) {
