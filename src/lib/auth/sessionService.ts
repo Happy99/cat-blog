@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { SessionPayload } from '@/lib/definitions'
+import { SessionPayload } from '@/schemas/session'
 import { envHelper } from '@/utils/utils'
 import { SignJWT, jwtVerify } from 'jose'
 import { NextApiRequest, NextApiResponse } from 'next'

@@ -1,8 +1,8 @@
 import { IAllArticles, IArticle, IArticleDetails } from '@/lib/articles/articles.interfaces'
 import { axiosBackendInstance, axiosFrontendInstance } from '@/lib/axiosInstance'
 import { ApiResponse } from '@/pages/api/api.interfaces'
+import { NewArticleFormSchema, NewArticleFormState } from '@/schemas/article'
 import { toast } from 'react-toastify'
-import { NewArticleFormSchema, NewArticleFormState } from '../definitions'
 
 const getArticlesFrontend = async (limit?: number): Promise<IArticle[]> => {
   const response: ApiResponse<IAllArticles> = await axiosBackendInstance.get('/articles', {

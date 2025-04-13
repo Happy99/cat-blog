@@ -1,5 +1,5 @@
-import { LoginFormSchema, LoginFormState } from '@/lib/definitions'
 import { LoginResponse } from '@/pages/api/auth/auth.interfaces'
+import { LoginFormSchema, LoginFormState } from '@/schemas/login'
 import { axiosFrontendInstance } from '../axiosInstance'
 
 // TODO: refactor this - coulb be hook, needs better error handling

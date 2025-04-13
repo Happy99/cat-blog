@@ -1,5 +1,5 @@
 import { articlesService } from '@/lib/articles/articleService'
-import { NewArticleFormState } from '@/lib/definitions'
+import { NewArticleFormState } from '@/schemas/article'
 import Image from 'next/image'
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 

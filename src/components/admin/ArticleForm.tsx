@@ -1,6 +1,6 @@
 import { IArticleDetails } from '@/lib/articles/articles.interfaces'
 import { articlesService } from '@/lib/articles/articleService'
-import { NewArticleFormState } from '@/lib/definitions'
+import { NewArticleFormState } from '@/schemas/article'
 import { useRouter } from 'next/router'
 import { useActionState, useEffect, useState } from 'react'
 import PageHeading from '../PageHeading/PageHeading'
