@@ -135,6 +135,7 @@ Sorry for that, trust me, this is not something I would really do :D. ("the goal
 - divide setuping axios instances between FE a BE. With that approach I should be able to add authorization token from session - maybe eve trough URL I'm comming from it could wokr, no time, did not try unfortunately ...
 - e2e test (playwright) - I wanted to test if user can see articles and login page, no time ... maybe I can try trough AI.
 - storybook - not implemented, bootstrap is used with simple HTML elemets attributes - but may be nice with some components
+- would be nice to check if something has change in edit article and inform user before leaving or just sent data who got updated
 
 ### tech-stack:
 

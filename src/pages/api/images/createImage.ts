@@ -57,7 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(response.status).json(response.data)
     }
 
-    handleApiError(response.status, ['images', 'uploadImage'], res)
+    handleApiError(response.status, ['images', 'createImage'], res)
   } catch (error) {
     console.error('Error creating article:', error)
     res.status(500).json({ error: 'Internal server error' })

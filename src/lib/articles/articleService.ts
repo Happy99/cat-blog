@@ -247,7 +247,7 @@ const articleUploadImage = async (
   formData: FormData
 ): Promise<{ message: string; success: boolean; imageId: string }> => {
   try {
-    const response = await axiosFrontendInstance.post('/api/images/upload', formData, {
+    const response = await axiosFrontendInstance.post('/api/images/createImage', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
     // 10/04/2025: response.data is an array of objects now, something very weird happened, API is returning 200 instead of 201 now, I would bet that 201 worked before in commitID: 14d8aff259b58dbe42fa4b19dc25bfaea49769c0
