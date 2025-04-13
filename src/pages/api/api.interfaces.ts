@@ -1,4 +1,4 @@
-//TODO: go trough types, some of them are read only, some of them are DateTime
+//TODO: start using this generic type for all responses!!!!
 export interface ApiResponse<T> {
   data: T
   status: number

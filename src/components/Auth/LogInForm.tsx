@@ -13,7 +13,7 @@ const LogInForm = () => {
     }
   }, [state, router])
 
-  // TODO: refactor this, make input component, etc with validation to avoid repetations
+  // TODO: has to be refactored, in the same way as ArticleForm.tsx is done
   return (
     <form action={action} className={styles.loginForm}>
       {state?.success ? (

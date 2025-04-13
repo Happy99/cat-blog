@@ -1,4 +1,5 @@
 //TODO: go trough types, make them better - think about structure between article in blog and article in admin
+// implement better Axios response with generic types
 import { IPagination } from '@/pages/api/api.interfaces'
 
 export interface IAllArticles {

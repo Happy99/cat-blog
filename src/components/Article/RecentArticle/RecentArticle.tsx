@@ -10,7 +10,6 @@ const RecentArticle = ({ article }: { article: IArticle }) => {
 
   return (
     <div className="row">
-      {/* // TODO: I dont like this, but wireframe does not have full container width for the article */}
       <div className="col-md-8 col-12">
         <article className="d-lg-flex flex-row gap-4">
           <Image src={image} alt={article.title} width={272} height={244} className="img-fluid" />

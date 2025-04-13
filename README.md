@@ -124,7 +124,7 @@ Sorry for that, trust me, this is not something I would really do :D. ("the goal
 
 ### Missing - for those I ran out of time:
 
-- markdown for articles - I would implement this NPM package, it's quite populate and last publish is a month ago - https://www.npmjs.com/package/react-markdown
+- markdown for articles - I would implement NPM package - react-markdown, it's quite popular and last publish is a month ago - https://www.npmjs.com/package/react-markdown
 - admin - article table - fancy component (I would bet on ShadCN)
 - comments - tried trough postman and was getting 500 error, maybe I was missing something - unfortunately not time to try that agian
 - paginations - I would add paggination because /articles can have two parameters - limit&offset - on frontend I would display two buttons next and prev and with those I would be adjusting offset via URL and refetching the data
