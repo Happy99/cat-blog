@@ -71,7 +71,7 @@ export const nextErrors: ErrorStructure = {
       401: 'API key is missing or invalid',
       403: 'Access token is missing or invalid',
     },
-    patchArticle: {
+    updateArticle: {
       200: 'Article updated successfully',
       401: 'API key is missing or invalid',
       403: 'Access token is missing or invalid',

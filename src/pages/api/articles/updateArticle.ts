@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log('___ SERVER: editArticle - response.data', response.data)
     console.log('___ SERVER: editArticle - response.status', response.status)
 
-    handleApiError(response.status, ['blog', 'patchArticle'], res)
+    handleApiError(response.status, ['blog', 'updateArticle'], res)
   } catch (error) {
     console.error('Error updating article:', error)
     res.status(500).json({ error: 'Internal server error' })

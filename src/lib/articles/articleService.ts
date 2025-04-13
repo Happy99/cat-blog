@@ -206,7 +206,7 @@ const updateArticle = async (
 
   try {
     const response = await axiosFrontendInstance.patch(
-      `/api/articles/editArticle?id=${articleId}`,
+      `/api/articles/updateArticle?id=${articleId}`,
       {
         articleId,
         title: validatedTitle,
