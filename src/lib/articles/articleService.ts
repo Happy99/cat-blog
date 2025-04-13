@@ -123,7 +123,7 @@ const createArticle = async (
   } = validatedFields.data
 
   try {
-    const response = await axiosFrontendInstance.post('/api/articles/newArticle', {
+    const response = await axiosFrontendInstance.post('/api/articles/createArticle', {
       title: validatedTitle,
       perex: validatedPerex,
       content: validatedContent,
