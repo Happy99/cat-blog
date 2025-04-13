@@ -3,10 +3,10 @@ import { LoginResponse } from '@/pages/api/auth/auth.interfaces'
 import { axiosFrontendInstance } from '../axiosInstance'
 
 // TODO: refactor this - coulb be hook, needs better error handling
-async function login(
+const login = async (
   state: LoginFormState | undefined,
   formData: FormData
-): Promise<LoginFormState> {
+): Promise<LoginFormState> => {
   const validatedFields = LoginFormSchema.safeParse({
     username: formData.get('username'),
     password: formData.get('password'),
@@ -48,7 +48,7 @@ async function login(
   }
 }
 
-async function handleAuthResponse(username: string, password: string): Promise<LoginResponse> {
+const handleAuthResponse = async (username: string, password: string): Promise<LoginResponse> => {
   return await axiosFrontendInstance.post('/api/auth/login', {
     username,
     password,

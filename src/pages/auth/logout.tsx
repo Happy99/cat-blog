@@ -21,7 +21,6 @@ const LogoutPage = () => {
   )
 }
 
-// Optional: Redirect if not logged in (though not strictly necessary here)
 export const getServerSideProps: GetServerSideProps = async context => {
   const { req } = context
 

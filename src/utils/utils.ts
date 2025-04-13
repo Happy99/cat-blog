@@ -21,11 +21,11 @@ export const envHelper = (): void => {
   console.log('_____ ENV TEST', process.env.TEST_DEV)
 }
 
-export async function validateFrontendSession(
+export const validateFrontendSession = async (
   req: IncomingMessage & {
     cookies: NextApiRequestCookies
   }
-) {
+) => {
   console.log('_***____ SERVER: validateFrontendSession START')
   const sessionResponse = await axiosFrontendInstance.get('/api/auth/session', {
     headers: {

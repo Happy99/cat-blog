@@ -9,7 +9,7 @@ import { cache } from 'react'
 const secretKey = process.env.SESSION_SECRET
 const encodedKey = new TextEncoder().encode(secretKey)
 
-async function encrypt(payload: SessionPayload) {
+const encrypt = async (payload: SessionPayload) => {
   console.log('____ SERVER sessionService: encrypt - ENV HELPER')
   envHelper()
 
@@ -20,7 +20,7 @@ async function encrypt(payload: SessionPayload) {
     .sign(encodedKey)
 }
 
-async function decrypt(session: string | undefined = '') {
+const decrypt = async (session: string | undefined = '') => {
   console.log('____ SERVER sessionService: decrypt - ENV HELPER')
   envHelper()
 
@@ -38,10 +38,10 @@ async function decrypt(session: string | undefined = '') {
   }
 }
 
-async function createSession(
+const createSession = async (
   { username, accessToken, tokenType, expiresIn }: SessionPayload,
   res: NextApiResponse
-) {
+) => {
   console.log('____ SERVER sessionService: createSession - ENV HELPER')
   envHelper()
 
@@ -58,7 +58,7 @@ async function createSession(
   )
 }
 
-async function deleteSession(res: NextApiResponse) {
+const deleteSession = (res: NextApiResponse) => {
   console.log('____ SERVER sessionService: deleteSession - ENV HELPER')
   envHelper()
 
