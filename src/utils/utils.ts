@@ -92,14 +92,24 @@ export const nextErrors: ErrorStructure = {
 export const handleApiError = (statusCode: number, from: string[], res: NextApiResponse) => {
   let errorMessage = ''
   let current: ErrorPath | ErrorMessages = nextErrors
+  let isCreateArticle = false
   for (const key of from) {
     if (current[key] && typeof current[key] === 'object') {
       current = current[key] as ErrorPath
+    }
+    if (key === 'createArticle') {
+      isCreateArticle = true
     }
   }
 
   if ((current as ErrorMessages)[statusCode]) {
     errorMessage = (current as ErrorMessages)[statusCode]
+  }
+
+  if (isCreateArticle && statusCode === 200) {
+    return res
+      .status(statusCode)
+      .json({ message: 'Article created successfully', revalidated: true })
   }
 
   if (statusCode === 204) {

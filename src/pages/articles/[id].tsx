@@ -15,9 +15,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     params: { id: String(article.articleId) },
   }))
 
-  // fallback is false, all articles are pre-rendered
-  // it is small database, with more articles it would be better to use 'blocking'
-  return { paths, fallback: false }
+  // fallback is 'blocking' because of the revalidation in createArticle.ts
+  return { paths, fallback: 'blocking' }
 }
 
 export const getStaticProps: GetStaticProps<Props> = async context => {

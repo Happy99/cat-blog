@@ -30,6 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log('___ SERVER: new article response: ', response.data)
     console.log('___ SERVER: new article response STATUS: ', response.status)
 
+    await res.revalidate(`/articles/${response.data.articleId}`)
     handleApiError(response.status, ['blog', 'createArticle'], res)
   } catch (error) {
     console.error('Error creating article:', error)
